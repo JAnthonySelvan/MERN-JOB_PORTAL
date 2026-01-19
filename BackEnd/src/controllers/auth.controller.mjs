@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { User } from "../models/User.model.mjs";
+import generateToken from "../utils/generateToken.mjs";
 import AppError from "../utils/AppError.mjs";
 
 
@@ -53,6 +54,8 @@ export const login = async(req,res,next)=>{
         )
     }
 
+    generateToken(res,user._id)
+
     res.status(200).json(
         {
             success : true,
@@ -64,5 +67,15 @@ export const login = async(req,res,next)=>{
             }
         }
     )
+
+}
+
+export const logout = (req,res,next) =>{
+    res.cookie("token","",{
+        httpOnly : true,
+        expires : new Date(0)
+    })
+
+      res.status(200).json({ message: "Logged out successfully" });
 
 }
