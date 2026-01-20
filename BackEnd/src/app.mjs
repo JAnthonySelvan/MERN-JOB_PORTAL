@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import authRoutes from "../src/routers/auth.router.mjs"
+import jobRoutes from "../src/routers/job.router.mjs"
 import errorMiddleware from "../src/middlewares/error.middleware.mjs"
 
 
@@ -20,6 +21,7 @@ app.get("/",(req,res)=>{
     res.send("Job Portal BackEnd Home")
 })
 app.use("/api/auth",authRoutes)
+app.use("/api",jobRoutes)
 
 app.use(errorMiddleware)
 
