@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import { User } from "../models/User.model.mjs"
 import AppError from "../utils/AppError.mjs";
 
-const protect = async(req,res,next)=>{
+export const protect = async(req,res,next)=>{
     const token = req.cookies.token;
 
     if(!token){
@@ -23,4 +23,13 @@ const protect = async(req,res,next)=>{
     }
 }
 
-export default protect
+export const authorize = (...roles)=>{
+    return (req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+            return next(
+                new AppError("You don't have permission to perform this action!",403)
+            )
+        }
+        next()
+    }
+}
