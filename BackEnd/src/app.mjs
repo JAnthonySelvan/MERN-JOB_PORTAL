@@ -3,6 +3,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import authRoutes from "../src/routers/auth.router.mjs"
 import jobRoutes from "../src/routers/job.router.mjs"
+import applicationRoutes from "../src/routers/application.router.mjs"
 import errorMiddleware from "../src/middlewares/error.middleware.mjs"
 
 
@@ -22,7 +23,7 @@ app.get("/",(req,res)=>{
 })
 app.use("/api/auth",authRoutes)
 app.use("/api",jobRoutes)
-
+app.use("/api/application",applicationRoutes)
 app.use(errorMiddleware)
 
 
