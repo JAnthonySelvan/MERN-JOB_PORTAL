@@ -9,9 +9,12 @@ const router = express.Router();
 
 router.post("/register",registerValidator,validate,register)
 router.post("/login",login)
-router.get("/logout",logout)
-router.get("/profile",protect,(req,res)=>{
-        res.status(200).json(req.user)
+router.post("/logout",logout)
+router.get("/me",protect,(req,res)=>{
+        res.status(200).json({
+                success : true,
+                user : req.user
+        })
 })
 
 
