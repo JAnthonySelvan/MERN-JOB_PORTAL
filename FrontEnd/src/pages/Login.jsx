@@ -40,7 +40,7 @@ function Login() {
           onChange={handleChange}
           placeholder="password"
         />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
         <button type="submit" disabled={loading} className="w-full bg-blue-600 py-2 rounded">
           {loading ? "Loging in..." : "Login"}
         </button>

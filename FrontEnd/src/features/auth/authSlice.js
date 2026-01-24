@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginApi, registerApi, logoutApi } from "./authApi";
+import { loginApi, registerApi, logoutApi, getMeAPI } from "./authApi";
 
 export const loginUser = createAsyncThunk(
   "auth/login",
@@ -40,6 +40,7 @@ export const logoutUser = createAsyncThunk(
 );
 
 export const getMe = createAsyncThunk("auth/me", async (_, thunkAPI) => {
+  // console.log("👉 getMe thunk called"); 
   try {
     return await getMeAPI();
   } catch (error) {
@@ -52,7 +53,7 @@ const authSlice = createSlice({
   initialState: {
     user: null,
     error: null,
-    loading: false,
+    loading: true,
     isAuthenticated: false,
   },
   reducers: {},
@@ -63,10 +64,11 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        ((state.user = action.payload.user),
-          // console.log(state.user)
-          (state.error = null));
-        ((state.loading = false), (state.isAuthenticated = true));
+          state.user=action.payload.user,
+          state.error=null,
+          state.isAuthenticated=true,
+          state.loading=false
+          // console.log(state.isAuthenticated)
       })
       .addCase(loginUser.rejected, (state, action) => {
         ((state.error = action.payload), (state.loading = false));
@@ -95,8 +97,10 @@ const authSlice = createSlice({
       })
       .addCase(getMe.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isAuthenticated = true;
+        // console.log(state.user)
+        // console.log(state.isAuthenticated)
       })
       .addCase(getMe.rejected, (state) => {
         state.loading = false;

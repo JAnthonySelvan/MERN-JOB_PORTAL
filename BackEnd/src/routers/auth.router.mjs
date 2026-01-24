@@ -11,10 +11,7 @@ router.post("/register",registerValidator,validate,register)
 router.post("/login",login)
 router.post("/logout",logout)
 router.get("/me",protect,(req,res)=>{
-        res.status(200).json({
-                success : true,
-                user : req.user
-        })
+        res.status(200).json(req.user)
 })
 
 
