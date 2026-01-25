@@ -17,7 +17,21 @@ export const createJob = async(req,res,next)=>{
 
 export const getAllJobs =async(req,res,next)=>{
     try{
-        const jobs = await Job.find().populate("recruiter","name email").sort({createdAt:-1})
+        const queryObj = {}
+        if(req.query.keyword){
+            queryObj.title={
+                $regex : req.query.keyword,
+                $options : "i"
+            }
+        }
+
+        if(req.query.location){
+            queryObj.location={
+                $regex : req.query.location,
+                $options : "i"
+            }
+        }
+        const jobs = await Job.find(queryObj).populate("recruiter","name email").sort({createdAt:-1})
         res.status(200).json({
             success : true,
             count : jobs.length,

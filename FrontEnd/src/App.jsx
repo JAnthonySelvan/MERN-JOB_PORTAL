@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import UserDashBoard from './pages/UserDashBoard'
 import RecruiterDashBoard from './pages/RecruiterDashBoard'
 import AdminDashboard from './pages/AdminDashboard'
+import Jobs from './pages/Jobs'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -44,6 +45,10 @@ function App() {
 
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["user"]}/>}>
+          <Route path='/jobs' element={<Jobs/>}/>
         </Route>
       </Routes>
     </Router>
