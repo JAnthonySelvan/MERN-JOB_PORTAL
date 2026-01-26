@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchJobs } from "../features/job/jobSlice";
 import JobCard from "../components/JobCard";
 import JobSearch from "../components/JobSearch";
+import { getMyApplications } from "../features/application/applicationSlice";
 
 function Jobs() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function Jobs() {
 
     useEffect(()=>{
         dispatch(fetchJobs())
+        dispatch(getMyApplications())
     },[])
 
   const handleSearch = useCallback(

@@ -6,8 +6,7 @@ const router = express.Router()
 
 router.post("/:jobId",protect,authorize("user"),applyJob)
 router.post("/job/:jobId",protect,authorize("recruiter"),getApplicantsByJob)
-router.get("/recruiter",protect,authorize("recruiter"),getMyApplications)
+router.get("/me",protect,authorize("recruiter","user"),getMyApplications)
 router.post("/:applicationId/status",protect,authorize("recruiter"),updateApplicationStatus)
-
 
 export default router
