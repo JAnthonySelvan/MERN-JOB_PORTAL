@@ -6,3 +6,8 @@ export const fetchJobApi = async(query="")=>{
     return response.data
 
 }
+
+export const fetchMyJobsApi = async()=>{
+    const response = await api.get("/jobs/my-jobs")
+    return response.data
+}

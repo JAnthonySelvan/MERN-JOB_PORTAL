@@ -10,9 +10,12 @@ import { logoutUser } from './features/auth/authSlice'
 import UnAutherized from './pages/UnAutherized'
 import ProtectedRoute from './components/ProtectedRoute'
 import UserDashBoard from './pages/UserDashBoard'
-import RecruiterDashBoard from './pages/RecruiterDashBoard'
+import RecruiterDashBoard from './pages/recruiter/RecruiterDashBoard'
 import AdminDashboard from './pages/AdminDashboard'
 import Jobs from './pages/Jobs'
+import MyJobs from './pages/recruiter/MyJobs'
+import JobApplicants from './pages/recruiter/JobApplicants'
+import Navbar from './components/Navbar'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -28,7 +31,7 @@ function App() {
   },[mode])
   return (
     <Router>
-      <ThemeToggle />
+      <Navbar/>
 
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -47,8 +50,15 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["user"]}/>}>
-          <Route path='/jobs' element={<Jobs/>}/>
+        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+          <Route path="/jobs" element={<Jobs />} />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+          <Route path="/recruiter/jobs" element={<MyJobs />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+          <Route path="/recruiter/jobs/:jobId/applicants" element={<JobApplicants/>} />
         </Route>
       </Routes>
     </Router>

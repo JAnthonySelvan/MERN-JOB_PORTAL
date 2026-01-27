@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
 import api from "../services/axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error,user } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     email: null,
     password: null,
@@ -18,6 +20,15 @@ function Login() {
     e.preventDefault()
     // console.log(formData)
     dispatch(loginUser(formData))
+  }
+
+  if(user){
+    if(user.role==="user"){
+      navigate("/user/dashboard")
+    }
+    else if(user.role === "recruiter"){
+      navigate("/recruiter/dashboard")
+    }
   }
 
   return (

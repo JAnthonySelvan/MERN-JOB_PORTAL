@@ -14,6 +14,15 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs",async(query,thunkApi)
     }
 })
 
+export const fetchMyJobs = createAsyncThunk("jobs/my-jobs",async(_,thunkApi)=>{
+    try{
+        return await fetchJobApi()
+    }
+    catch(error){
+        thunkApi.rejectWithValue("Failed to load jobs")
+    }
+})
+
 const jobSlice = createSlice(
     {
         name : "jobs",
@@ -48,6 +57,9 @@ const jobSlice = createSlice(
                 .addCase(fetchJobs.rejected,(state,action)=>{
                     state.loading= false,
                     state.error=action.payload
+                })
+                .addCase(fetchMyJobs.fulfilled,(state,action)=>{
+                    state.jobs = action.payload.jobs
                 })
         }
     }

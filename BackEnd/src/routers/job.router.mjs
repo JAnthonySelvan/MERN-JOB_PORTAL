@@ -8,6 +8,6 @@ const router = express.Router()
 
 router.post("/jobs",protect,authorize("recruiter"),jobValidator,validate,createJob)
 router.get("/jobs",protect,getAllJobs)
-router.get("/my-jobs", protect, authorize("recruiter"), getMyJobs);
+router.get("/jobs/my-jobs", protect, authorize("recruiter"), getMyJobs);
 
 export default router

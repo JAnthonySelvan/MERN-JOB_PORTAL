@@ -51,33 +51,40 @@ export const getApplicantsByJob = async (req, res, next) => {
   }
 };
 
-export const getMyApplications = async (req, res, next) => {
+export const getUserApplications = async (req, res, next) => {
   try {
 
-    const role = req.user.role
+    // const role = req.user.role
     
-    if(role === "recruiter"){
-      const applications = await Application.find({ recruiter: req.user._id })
-        .populate("job", "title location")
-        .populate("applicant", "name email")
-        .sort({ createdAt: -1 });
-        return res.status(200).json({
-          success: true,
-          applications,
-        });
-    }
-    if(role === "user"){
-        const applications = await Application.find({ applicant: req.user._id }).select("job")
+    // if(role === "recruiter"){
+    const applications = await Application.find({ applicant: req.user._id }).select("job")
          return res.status(200).json({
            success: true,
            applications,
          });
+      
     }
     
-  } catch (error) {
+   catch (error) {
     next(error);
   }
 };
+
+export const getRecruiterApplication = async(req,res,next)=>{
+  try {
+    const applications = await Application.find({ recruiter: req.user._id })
+      .populate("job", "title location")
+      .populate("applicant", "name email")
+      .sort({ createdAt: -1 });
+    return res.status(200).json({
+      success: true,
+      applications,
+    });
+  } catch (error) {
+    next(error);
+  }
+    
+} 
 
 export const updateApplicationStatus = async (req, res, next) => {
   try {

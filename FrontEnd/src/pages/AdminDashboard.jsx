@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 import { useSelector } from "react-redux";
-import Logout from "./Logout";
+import Logout from "../components/Logout";
 function AdminDashboard() {
-   const { name, email, role } = useSelector((state) => state.auth.user);
-   return (
-     <div>
-       <p>name:{name}</p>
-       <p>email:{email}</p>
-       <p>role:{role}</p>
-       <Logout />
-     </div>
-   );
+  const { name, email, role } = useSelector((state) => state.auth.user);
+  return (
+    <div>
+      <p>name:{name}</p>
+      <p>email:{email}</p>
+      <p>role:{role}</p>
+      <Logout />
+    </div>
+  );
 }
 
-export default AdminDashboard
+export default AdminDashboard;
