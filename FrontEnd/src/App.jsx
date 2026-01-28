@@ -9,13 +9,13 @@ import { getMe } from './features/auth/authSlice'
 import { logoutUser } from './features/auth/authSlice'
 import UnAutherized from './pages/UnAutherized'
 import ProtectedRoute from './components/ProtectedRoute'
-import UserDashBoard from './pages/UserDashBoard'
 import RecruiterDashBoard from './pages/recruiter/RecruiterDashBoard'
 import AdminDashboard from './pages/AdminDashboard'
 import Jobs from './pages/Jobs'
 import MyJobs from './pages/recruiter/MyJobs'
 import JobApplicants from './pages/recruiter/JobApplicants'
 import Navbar from './components/Navbar'
+import Profile from './pages/Profile'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -38,9 +38,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/unautherized" element={<UnAutherized />} />
 
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/user/dashboard" element={<UserDashBoard />} />
+        <Route element={<ProtectedRoute allowedRoles={["user"]}/>}>
+            <Route path='/profile' element={<Profile/>} />
         </Route>
+
 
         <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
           <Route path="/recruiter/dashboard" element={<RecruiterDashBoard />} />

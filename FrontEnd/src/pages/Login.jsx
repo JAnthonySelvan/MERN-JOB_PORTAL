@@ -24,7 +24,7 @@ function Login() {
 
   if(user){
     if(user.role==="user"){
-      navigate("/user/dashboard")
+      navigate("/profile")
     }
     else if(user.role === "recruiter"){
       navigate("/recruiter/dashboard")

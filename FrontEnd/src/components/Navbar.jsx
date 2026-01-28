@@ -43,7 +43,7 @@ const Navbar = () => {
         {isAuthenticated && user?.role === "user" && (
           <>
             <NavLink to="/user/dashboard" className={linkClass}>
-              Dashboard
+              Profile
             </NavLink>
             <NavLink to="/jobs" className={linkClass}>
               Jobs

@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { User } from "../models/User.model.mjs";
+import { User } from "../models/user.model.mjs";
 import generateToken from "../utils/generateToken.mjs";
 import AppError from "../utils/AppError.mjs";
 
@@ -79,3 +79,4 @@ export const logout = (req,res,next) =>{
       res.status(200).json({ message: "Logged out successfully" });
 
 }
+

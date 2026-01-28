@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "recruiter", "admin"],
       default: "user",
     },
+    resume :{
+      type : String
+    },
 
     isApproved: {
       type: Boolean,

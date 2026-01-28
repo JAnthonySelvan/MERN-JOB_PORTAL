@@ -5,6 +5,7 @@ import authRoutes from "../src/routers/auth.router.mjs"
 import jobRoutes from "../src/routers/job.router.mjs"
 import applicationRoutes from "../src/routers/application.router.mjs"
 import errorMiddleware from "../src/middlewares/error.middleware.mjs"
+import userRouter from "../src/routers/user.routes.mjs"
 
 
 const app = express();
@@ -17,6 +18,8 @@ app.use(
     credentials: true,
   }),
 );
+app.use("/uploads", express.static("uploads"));
+
 
 app.get("/",(req,res)=>{
     res.send("Job Portal BackEnd Home")
@@ -24,6 +27,7 @@ app.get("/",(req,res)=>{
 app.use("/api/auth",authRoutes)
 app.use("/api",jobRoutes)
 app.use("/api/application",applicationRoutes)
+app.use("/api/user",userRouter)
 app.use(errorMiddleware)
 
 
