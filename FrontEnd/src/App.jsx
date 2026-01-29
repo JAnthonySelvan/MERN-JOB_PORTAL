@@ -16,6 +16,7 @@ import MyJobs from './pages/recruiter/MyJobs'
 import JobApplicants from './pages/recruiter/JobApplicants'
 import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
+import Home from './pages/Home'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -31,35 +32,37 @@ function App() {
   },[mode])
   return (
     <Router>
-      <Navbar/>
+      <Navbar />
 
       <Routes>
+        
+
+          <Route path="/" element={<Home />} />
+          
+        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/unautherized" element={<UnAutherized />} />
-
-        <Route element={<ProtectedRoute allowedRoles={["user"]}/>}>
-            <Route path='/profile' element={<Profile/>} />
+        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+          <Route path="/profile" element={<Profile />} />
         </Route>
-
-
         <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
           <Route path="/recruiter/dashboard" element={<RecruiterDashBoard />} />
         </Route>
-
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
-
         <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
           <Route path="/jobs" element={<Jobs />} />
         </Route>
         <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
           <Route path="/recruiter/jobs" element={<MyJobs />} />
         </Route>
-
         <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
-          <Route path="/recruiter/jobs/:jobId/applicants" element={<JobApplicants/>} />
+          <Route
+            path="/recruiter/jobs/:jobId/applicants"
+            element={<JobApplicants />}
+          />
         </Route>
       </Routes>
     </Router>

@@ -14,11 +14,12 @@ const JobCard = ({ job }) => {
   };
 
   return (
-    <div className="border rounded p-4 bg-white dark:bg-gray-800 shadow">
-      <h3 className="text-lg font-bold">{job.title}</h3>
+    <div className="rounded-xl border shadow-sm hover:shadow-md transition p-5 bg-white dark:bg-gray-800">
+      
+
+      <h3 className="text-lg font-semibold mb-1">{job.title}</h3>
       <p className="text-sm text-gray-500">{job.location}</p>
-      <p className="mt-2 text-sm">{job.description.slice(0, 100)}...</p>
-      <p className="mt-2 text-xs font-semibold">Type: {job.jobType}</p>
+      <p className="mt-3 text-sm line-clamp-3">{job.description}</p>
       <button
         disabled={isApplied || loading}
         onClick={handleApply}
@@ -33,3 +34,5 @@ const JobCard = ({ job }) => {
 };
 
 export default JobCard;
+
+ 

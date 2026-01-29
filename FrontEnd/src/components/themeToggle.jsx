@@ -8,7 +8,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={() => dispatch(toggleTheme())}
-      className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700"
+      className="px-4 py-1 rounded text-white bg-gray-200 mt-1 dark:bg-gray-700"
     >
       {mode === "light" ? "🌙 Dark" : "☀️ Light"}
     </button>
