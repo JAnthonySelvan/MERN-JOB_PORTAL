@@ -4,7 +4,7 @@ import { fetchJobs } from "../features/job/jobSlice";
 import JobCard from "../components/JobCard";
 import JobSearch from "../components/JobSearch";
 import { getMyApplications } from "../features/application/applicationSlice";
-
+import Loader from "../components/Loader";
 function Jobs() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.jobs);
@@ -25,6 +25,8 @@ function Jobs() {
   );
 //   if (loading) return <p className="p-4">Loading jobs...</p>;
 //   if (error) return <p className="p-4 text-red-500">{error}</p>;
+if (loading) return <Loader />;
+
   return (
     <div className="p-6">
       <JobSearch onSearch={handleSearch} />

@@ -5,6 +5,7 @@ import {
   updateApplicationStatusApi,
 } from "./applicationApi";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const applyJob = createAsyncThunk(
   "application/apply",
@@ -73,12 +74,15 @@ const applicationSlice = createSlice({
       .addCase(applyJob.fulfilled, (state, action) => {
         state.loading = false;
         state.appliedJobs.push(action.meta.arg);
+        toast.success("Job Applied Successfully")
+        
         // console.log(state.appliedJobs)
         // console.log(action.meta.arg)
       })
       .addCase(applyJob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.error("Application failed")
         // console.log("error")
       })
       .addCase(getMyApplications.fulfilled, (state, action) => {
@@ -93,6 +97,7 @@ const applicationSlice = createSlice({
         state.applicants.map((app) => {
           app._id === updatedApp._id ?  updatedApp : app;
         });
+        toast.success("Updated Successfully")
       });
   },
 });

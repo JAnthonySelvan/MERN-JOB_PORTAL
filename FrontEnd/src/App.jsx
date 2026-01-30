@@ -17,13 +17,12 @@ import JobApplicants from './pages/recruiter/JobApplicants'
 import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
+import {Toaster} from "react-hot-toast"
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
-  const state = useSelector((state)=>state.auth)
    useEffect(() => {
      dispatch(getMe());
-    //  console.log(state)
    }, [dispatch]);
   const mode  = useSelector((state)=>state.theme.mode)
 
@@ -33,6 +32,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      <Toaster position='top-right'/>
 
       <Routes>
         

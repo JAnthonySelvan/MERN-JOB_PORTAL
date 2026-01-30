@@ -14,10 +14,14 @@ function ResumeUpload() {
 
         formData.append("resume",file)
 
-        api.patch("/user/upload-resume",formData)
+      const response = await api.patch("/user/upload-resume",formData)
 
         dispatch(getMe())
 
+        if(response.status){
+          console.log(response.status)
+        }
+            
     }
   return (
     <form onSubmit={handleSubmit} className="mt-4">

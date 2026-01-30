@@ -3,15 +3,21 @@ import { register,login,logout } from "../controllers/auth.controller.mjs"
 import { registerValidator } from "../validators/auth.validator.mjs"
 import validate from "../middlewares/validate.mjs"
 import {protect,authorize} from "../middlewares/auth.miidleware.mjs";
-import { User } from "../models/User.model.mjs";
+import { User } from "../models/user.model.mjs";
 
 const router = express.Router();
 
 router.post("/register",registerValidator,validate,register)
 router.post("/login",login)
 router.post("/logout",logout)
-router.get("/me",protect,(req,res)=>{
-        res.status(200).json(req.user)
+router.get("/me",protect,(req,res,next)=>{
+        try{
+            res.status(200).json(req.user)    
+        }
+        catch(error){
+                next(error)
+        }
+        
 })
 
 

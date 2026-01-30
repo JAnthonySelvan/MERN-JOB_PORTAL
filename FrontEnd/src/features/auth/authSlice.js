@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginApi, registerApi, logoutApi, getMeAPI } from "./authApi";
+import toast from "react-hot-toast";
+import api from "../../services/axios";
 
 export const loginUser = createAsyncThunk(
   "auth/login",
@@ -41,21 +43,25 @@ export const logoutUser = createAsyncThunk(
   },
 );
 
-export const getMe = createAsyncThunk("auth/me", async (_, thunkAPI) => {
-  // console.log("👉 getMe thunk called"); 
+export const getMe = createAsyncThunk("auth/getMe", async (_, thunkAPI) => {
   try {
-    return await getMeAPI();
+    const res = await api.get("/auth/me");
+    return res.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("Not authenticated");
+    // console.log(error)
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message || "Not authenticated",
+    );
   }
 });
+
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
     error: null,
-    loading: true,
+    loading: false,
     isAuthenticated: false,
   },
   reducers: {},
@@ -66,14 +72,15 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-          // state.user=action.payload.user,
-          // state.error=null,
-          state.isAuthenticated=true,
-          state.loading=false
-          // console.log(state.isAuthenticated)
+        // state.user=action.payload.user,
+        // state.error=null,
+        state.loading = false
+        toast.success("Login successful");
+        // console.log(state.isAuthenticated)
       })
       .addCase(loginUser.rejected, (state, action) => {
         ((state.error = action.payload), (state.loading = false));
+        toast.error(action.payload || "Login Failed");
         // console.log(action.payload)
       })
       .addCase(registerUser.pending, (state) => {
@@ -81,33 +88,39 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         ((state.loading = false), (state.error = null));
+        toast.success(action.payload || "Registered Successfully");
       })
       .addCase(registerUser.rejected, (state, action) => {
         ((state.loading = false), (state.error = action.payload));
+        toast.error(action.payload || "Registration failed");
       })
       .addCase(logoutUser.fulfilled, (state) => {
         ((state.loading = false),
           (state.isAuthenticated = false),
           (state.user = null));
+        toast.success("Logout Successful");
       })
       .addCase(logoutUser.rejected, (state, action) => {
         ((state.error = action.payload), (state.loading = false));
+        toast.error(action.payload || "Logout Failed");
       })
       .addCase(getMe.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
+
       .addCase(getMe.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
         state.isAuthenticated = true;
-        // console.log(state.user)
-        // console.log(state.isAuthenticated)
+        state.error = null;
       })
-      .addCase(getMe.rejected, (state) => {
+
+      .addCase(getMe.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
+        console.log(action.payload)
+        // state.error = action.payload; // STRING ONLY
       });
   },
 });

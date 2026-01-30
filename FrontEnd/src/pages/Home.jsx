@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+// import Loader from "../components/Loader";
 
 const Home = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  // if (loading) return <Loader />;
+
 
   return (
     <div

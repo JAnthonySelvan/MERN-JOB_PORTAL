@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import { User } from "../models/User.model.mjs"
+import { User } from "../models/user.model.mjs";
 import AppError from "../utils/AppError.mjs";
 
 export const protect = async(req,res,next)=>{

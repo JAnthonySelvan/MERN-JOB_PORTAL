@@ -3,23 +3,29 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { registerUser } from "../features/auth/authSlice";
+import { Link } from "react-router-dom";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (!error && !loading) {
-        navigate("/login")
-    }
-  }, [error, loading, navigate]);
+  // useEffect(() => {
+  //   if (!error && !loading) {
+  //       navigate("/login")
+  //   }
+  // }, [error, loading, navigate]);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    dispatch(registerUser(data));
+
+  const onSubmit = async (data) => {
+    const result = await dispatch(registerUser(data));
+
+    if (registerUser.fulfilled.match(result)) {
+      window.location.href = "/login";
+    }
   };
 
   return (
@@ -69,12 +75,23 @@ function Register() {
         )}
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <button
-          className="w-full bg-green-600 text-white py-2 rounded"
+          className="w-full bg-green-600 text-white py-2 rounded mb-4"
           type="submit"
           disabled={loading}
         >
           {loading ? "Registering..." : "Register"}
         </button>
+        <p className="text-center">
+          If you already have an account 
+          <Link
+            className="text-red-600"
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+          >
+            Login
+          </Link>
+        </p>
       </form>
     </div>
   );
