@@ -1,4 +1,4 @@
-import { fetchJobApi } from "./jobApi";
+import { fetchJobApi,fetchMyJobsApi } from "./jobApi";
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs",async(query,thunkApi)=>{
@@ -16,9 +16,10 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs",async(query,thunkApi)
 
 export const fetchMyJobs = createAsyncThunk("jobs/my-jobs",async(_,thunkApi)=>{
     try{
-        return await fetchJobApi()
+        return await fetchMyJobsApi()
     }
     catch(error){
+        console.log(error)
         thunkApi.rejectWithValue("Failed to load jobs")
     }
 })
@@ -30,7 +31,9 @@ const jobSlice = createSlice(
             jobs : [],
             error : null,
             loading : false,
-            isSearching : false
+            isSearching : false,
+            page:null,
+            pages:null
 
         },
         reducers :{
@@ -48,10 +51,13 @@ const jobSlice = createSlice(
                     
                 })
                 .addCase(fetchJobs.fulfilled,(state,action)=>{
+                    console.log(action.payload.jobs)
                     state.loading=false,
                     state.isSearching=false,
                     state.jobs=action.payload.jobs,
-                    state.error=null
+                    state.error=null,
+                    state.page=action.payload.page,
+                    state.pages=action.payload.pages
                     // console.log(state.jobs)
                 })
                 .addCase(fetchJobs.rejected,(state,action)=>{

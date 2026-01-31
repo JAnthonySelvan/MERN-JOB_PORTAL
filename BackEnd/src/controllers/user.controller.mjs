@@ -17,6 +17,7 @@ export const uploadUserResume = async (req, res, next) => {
       resume: user.resume,
     });
   } catch (error) {
+    console.log("Error")
     next(error);
   }
 };
