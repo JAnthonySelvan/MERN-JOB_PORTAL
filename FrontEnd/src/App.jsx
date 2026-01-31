@@ -17,7 +17,9 @@ import JobApplicants from './pages/recruiter/JobApplicants'
 import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
+import PostJob from './pages/PostJob'
 import {Toaster} from "react-hot-toast"
+import EditJob from './pages/recruiter/EditJob'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -32,14 +34,11 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Toaster position='top-right'/>
+      <Toaster position="top-right" />
 
       <Routes>
-        
+        <Route path="/" element={<Home />} />
 
-          <Route path="/" element={<Home />} />
-          
-        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/unautherized" element={<UnAutherized />} />
@@ -63,6 +62,12 @@ function App() {
             path="/recruiter/jobs/:jobId/applicants"
             element={<JobApplicants />}
           />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+          <Route path="/recruiter/post-job" element={<PostJob />} />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+          <Route path="/recruiter/edit-job/:id" element={<EditJob />} />
         </Route>
       </Routes>
     </Router>
