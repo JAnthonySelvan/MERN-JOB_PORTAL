@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logout from "../../components/Logout";
 import Container from "../../components/Container";
+import { useNavigate } from "react-router-dom";
 function RecruiterDashBoard() {
+  const navigate = useNavigate()
   const { name, email, role } = useSelector((state) => state.auth.user);
   return (
     <Container>
@@ -35,7 +37,14 @@ function RecruiterDashBoard() {
             >
               View My Jobs
             </Link>
-            <Logout />
+            <button
+                  onClick={() => {
+                    navigate("/recruiter/post-job")
+                  }}
+                  className="px-4 py-2 bg-green-500 text-white rounded"
+                >
+                  Post Job
+                </button>
           </div>
         </div>
       </div>

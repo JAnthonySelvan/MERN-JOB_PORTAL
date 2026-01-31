@@ -18,6 +18,7 @@ import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
 import {Toaster} from "react-hot-toast"
+import PostJob from './pages/PostJob'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -63,6 +64,9 @@ function App() {
             path="/recruiter/jobs/:jobId/applicants"
             element={<JobApplicants />}
           />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["recruiter"]}/>}>
+            <Route path="/recruiter/post-job" element={<PostJob/>}/>
         </Route>
       </Routes>
     </Router>

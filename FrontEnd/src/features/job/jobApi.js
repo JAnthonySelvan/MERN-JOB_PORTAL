@@ -12,3 +12,8 @@ export const fetchMyJobsApi = async()=>{
     // console.log(response)
     return response.data
 }
+
+export const createJobApi =  async(jobData)=>{
+  const response = await api.post("/jobs",jobData)
+  return response.data
+}
