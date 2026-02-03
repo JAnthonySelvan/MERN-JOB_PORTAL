@@ -35,7 +35,7 @@ export const getApplicantsByJob = async (req, res, next) => {
       job: jobId,
       recruiter: req.user._id,
     })
-      .populate("applicant", "name email")
+      .populate("applicant", "name email resume")
       .sort({ createdAt: -1 });
 
     if (!applications) {

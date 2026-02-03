@@ -35,6 +35,9 @@ function Login() {
       } else if (user.role === "recruiter") {
         navigate("/recruiter/dashboard");
       }
+      else if(user.role === "admin"){
+        navigate("/admin/dashboard")
+      }
     }
   }, [user, navigate]);
 

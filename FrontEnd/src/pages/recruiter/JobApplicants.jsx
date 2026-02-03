@@ -25,10 +25,21 @@ const JobApplicants = () => {
       </h2>
 
       {applicants.map((app) => (
-        <div key={app._id} className="border p-3 mb-2 ">
+        <div key={app._id} className="flex flex-col items-center justify-center border rounded-md p-3 mb-2 ">
           <p>{app.applicant.name}</p>
           <p>{app.applicant.email}</p>
           <p>Status: {app.status}</p>
+
+          {app.applicant.resume && (
+            <a
+              href={` http://localhost:5000${app.applicant.resume}`}
+              target="_blank"
+              rel="noreferrer"
+              className=" ml-7 text-blue-600 block mt-2"
+            >
+              View Resume
+            </a>
+          )}
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => handleStatusUpdate(app._id, "shortlisted")}

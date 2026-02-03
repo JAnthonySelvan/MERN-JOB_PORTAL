@@ -6,6 +6,7 @@ import jobRoutes from "../src/routers/job.router.mjs"
 import applicationRoutes from "../src/routers/application.router.mjs"
 import errorMiddleware from "../src/middlewares/error.middleware.mjs"
 import userRouter from "../src/routers/user.routes.mjs"
+import adminRoutes from "../src/routers/admin.router.mjs"
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/auth",authRoutes)
 app.use("/api",jobRoutes)
 app.use("/api/application",applicationRoutes)
 app.use("/api/user",userRouter)
+app.use("/api/admin",adminRoutes)
 app.use(errorMiddleware)
 
 

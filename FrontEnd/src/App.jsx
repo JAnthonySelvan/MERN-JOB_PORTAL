@@ -10,7 +10,6 @@ import { logoutUser } from './features/auth/authSlice'
 import UnAutherized from './pages/UnAutherized'
 import ProtectedRoute from './components/ProtectedRoute'
 import RecruiterDashBoard from './pages/recruiter/RecruiterDashBoard'
-import AdminDashboard from './pages/AdminDashboard'
 import Jobs from './pages/Jobs'
 import MyJobs from './pages/recruiter/MyJobs'
 import JobApplicants from './pages/recruiter/JobApplicants'
@@ -20,6 +19,7 @@ import Home from './pages/Home'
 import PostJob from './pages/PostJob'
 import {Toaster} from "react-hot-toast"
 import EditJob from './pages/recruiter/EditJob'
+import AdminDashboard from './pages/admin/AdminDashboard'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -68,6 +68,10 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
           <Route path="/recruiter/edit-job/:id" element={<EditJob />} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["admin"]}/>}>
+            <Route path='/admin/dashboard' element={<AdminDashboard/>} />
         </Route>
       </Routes>
     </Router>
