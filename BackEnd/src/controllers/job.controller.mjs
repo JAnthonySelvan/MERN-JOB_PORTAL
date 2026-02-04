@@ -3,6 +3,12 @@ import AppError from "../utils/AppError.mjs";
 
 export const createJob = async(req,res,next)=>{
     try{
+        if (req.user.role === "recruiter" && req.user.status !== "approved") {
+          return res.status(403).json({
+            message: "Recruiter approval pending",
+          });
+        }
+
         const job = await Job.create({...req.body,recruiter:req.user._id})
         res.status(201).json({
           success: true,

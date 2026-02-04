@@ -18,7 +18,7 @@ export const getAllUsers = async (req, res, next) => {
 export const getAllRecruiters = async (req, res, next) => {
   try {
     const recruiters = await User.find({ role: "recruiter" }).select(
-      "name email createdAt",
+      "name email status createdAt",
     );
 
     res.status(200).json({
@@ -29,3 +29,34 @@ export const getAllRecruiters = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateRecruiterStatus = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+
+    if (!["approved", "rejected"].includes(status)) {
+      return res.status(400).json({
+        message: "Invalid status",
+      });
+    }
+
+    const recruiter = await User.findById(req.params.id);
+
+    if (!recruiter || recruiter.role !== "recruiter") {
+      return res.status(404).json({
+        message: "Recruiter not found",
+      });
+    }
+
+    recruiter.status = status;
+    await recruiter.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Recruiter ${status} successfully`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+

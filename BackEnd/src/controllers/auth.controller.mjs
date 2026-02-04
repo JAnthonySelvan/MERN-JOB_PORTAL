@@ -40,10 +40,13 @@ export const login = async(req,res,next)=>{
             new AppError("User in Inactive",403)
         )
     }
-    if(user.role ==="recruiter" && !user.isApproved){
+    if(user.role ==="recruiter" && user.status==="pending"){
        return next(
             new AppError("Recruiter yet not approved!",403)
         )
+    }
+    if (user.role === "recruiter" && user.status === "rejected") {
+      return next(new AppError("Your approval was rejected by admin!", 403));
     }
 
     const isMatched = await bcrypt.compare(password,user.password)

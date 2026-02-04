@@ -1,4 +1,4 @@
-import { fetchUsersApi,fetchRecruitersApi } from "./adminApi";
+import { fetchUsersApi,fetchRecruitersApi,updateRecruiterStatusApi } from "./adminApi";
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
@@ -22,12 +22,23 @@ export const fetchRecruiters = createAsyncThunk(
   },
 );
 
+export const updateRecruiterStatus = createAsyncThunk(
+  "update/status",async({id,status},thunkApi)=>{
+    try{
+      return await updateRecruiterStatusApi(id,status)
+    }catch(error){
+        return thunkApi.rejectWithValue("Faild to update")
+    }
+  }
+)
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
     users: [],
     recruiters: [],
     loading: false,
+    error:false
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +65,14 @@ const adminSlice = createSlice({
       .addCase(fetchRecruiters.rejected, (state, action) => {
         state.loading = false;
         toast.error(action.payload);
+      })
+      .addCase(updateRecruiterStatus.fulfilled,(state,action)=>{
+        state.error=false
+        toast.success(action.payload.message)
+      })
+      .addCase(updateRecruiterStatus.rejected,(state,action)=>{
+        state.error=false
+        toast.error(action.payload)
       });
 
   },

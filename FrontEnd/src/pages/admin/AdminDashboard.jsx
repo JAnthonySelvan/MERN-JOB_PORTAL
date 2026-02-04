@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers,fetchRecruiters } from "../../features/admin/AdminSlice";
+import { fetchUsers,fetchRecruiters,updateRecruiterStatus } from "../../features/admin/AdminSlice";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const { users, recruiters, loading } = useSelector((state) => state.admin);
+  const { users, recruiters, loading,error } = useSelector((state) => state.admin);
   console.log(users)
   console.log(recruiters)
 
@@ -36,9 +36,50 @@ const AdminDashboard = () => {
         <h2 className="text-xl font-semibold mb-2">Recruiters</h2>
         <ul className="bg-white dark:bg-gray-800 rounded shadow">
           {recruiters.map((r) => (
-            <li key={r._id} className="p-3 border-b dark:border-gray-700">
-              {r.name} — {r.email}
-            </li>
+            <div
+              key={r._id}
+              className="flex justify-between items-center p-3 border-b"
+            >
+              <div>
+                <p>{r.name}</p>
+                <p className="text-sm text-gray-500">
+                  {r.email} — {r.status}
+                </p>
+              </div>
+
+              {r.status === "pending" && (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        updateRecruiterStatus({
+                          id: r._id,
+                          status: "approved",
+                        }),
+                        (window.location.href = "/admin/dashboard"),
+                      )
+                    }
+                    className="bg-green-600 text-white px-2 py-1 rounded"
+                  >
+                    Approve
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        updateRecruiterStatus({
+                          id: r._id,
+                          status: "rejected",
+                        }),
+                      )
+                    }
+                    className="bg-red-600 text-white px-2 py-1 rounded"
+                  >
+                    Reject
+                  </button>
+                </div>
+              )}
+            </div>
           ))}
         </ul>
       </div>

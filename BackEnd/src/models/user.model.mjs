@@ -29,14 +29,15 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "recruiter", "admin"],
       default: "user",
     },
-    resume :{
-      type : String
+    resume: {
+      type: String,
     },
 
-    isApproved: {
-      type: Boolean,
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
       default: function () {
-        return this.role === "recruiter" ? false : true; // ✅ FIXED
+        return this.role === "recruiter" ? "pending" : "approved";
       },
     },
 
