@@ -7,7 +7,7 @@ const JobApplicants = () => {
   const { jobId } = useParams();
   const dispatch = useDispatch();
   const { applicants } = useSelector((state) => state.application);
-
+  console.log(applicants)
   
 
   const handleStatusUpdate = (applicationId, status) => {

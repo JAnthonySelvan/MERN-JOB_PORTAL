@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.mjs";
+import { sendEmail } from "../utils/sendEmail.mjs";
 
 export const getAllUsers = async (req, res, next) => {
   try {
@@ -19,7 +20,7 @@ export const getAllRecruiters = async (req, res, next) => {
   try {
     const recruiters = await User.find({ role: "recruiter" }).select(
       "name email status createdAt",
-    );
+    ).sort({createdAt:-1});
 
     res.status(200).json({
       success: true,
@@ -51,6 +52,21 @@ export const updateRecruiterStatus = async (req, res, next) => {
     recruiter.status = status;
     await recruiter.save();
 
+    if (status === "approved") {
+      try {
+        await sendEmail({
+          to: recruiter.email,
+          subject: "Recruiter Account Approved",
+          html: `
+    <h3>Congratulations!</h3>
+    <p>Your recruiter account has been approved. You can now post jobs.</p>
+  `,
+        });
+      } catch (error) {
+        console.log("Email failed", error.message);
+      }
+    }
+
     res.status(200).json({
       success: true,
       message: `Recruiter ${status} successfully`,
@@ -59,4 +75,3 @@ export const updateRecruiterStatus = async (req, res, next) => {
     next(error);
   }
 };
-
