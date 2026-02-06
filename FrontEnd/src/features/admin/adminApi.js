@@ -12,5 +12,10 @@ export const fetchRecruitersApi=async()=>{
 
 export const updateRecruiterStatusApi=async(id,status)=>{
     const response = await api.put(`/admin/recruiters/${id}/status`,{status:status});
-    return response.data
+    return response.data.recruiter
+}
+
+export const fetchAnalyticsApi = async()=>{
+    const response = await api.get("/admin/analytics");
+    return response.data.analytics
 }

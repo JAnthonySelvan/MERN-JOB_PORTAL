@@ -64,6 +64,14 @@ const Home = () => {
               Go to Dashboard
             </Link>
           )}
+          {isAuthenticated && user?.role === "admin" && (
+            <Link
+              to="/admin/dashboard"
+              className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Go to Dashboard
+            </Link>
+          )}
         </div>
       </div>
     </div>

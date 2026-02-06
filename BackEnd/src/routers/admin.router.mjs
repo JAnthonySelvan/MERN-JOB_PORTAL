@@ -1,8 +1,13 @@
-import express from "express"
-import { getAllUsers,getAllRecruiters,updateRecruiterStatus } from "../controllers/admin.controller.mjs"
-import {protect,authorize} from "../middlewares/auth.miidleware.mjs"
+import express from "express";
+import {
+  getAllUsers,
+  getAllRecruiters,
+  updateRecruiterStatus,
+  getAdminAnalytics,
+} from "../controllers/admin.controller.mjs";
+import { protect, authorize } from "../middlewares/auth.miidleware.mjs";
 
-const router = new express.Router()
+const router = new express.Router();
 
 router.get("/users", protect, authorize("admin"), getAllUsers);
 
@@ -13,5 +18,7 @@ router.put(
   authorize("admin"),
   updateRecruiterStatus,
 );
+
+router.get("/analytics", protect, authorize("admin"), getAdminAnalytics);
 
 export default router;

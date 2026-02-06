@@ -1,4 +1,7 @@
 import { User } from "../models/user.model.mjs";
+import { Job } from "../models/job.model.mjs";
+import { Application } from "../models/application.model.mjs";
+
 import { sendEmail } from "../utils/sendEmail.mjs";
 
 export const getAllUsers = async (req, res, next) => {
@@ -18,9 +21,9 @@ export const getAllUsers = async (req, res, next) => {
 
 export const getAllRecruiters = async (req, res, next) => {
   try {
-    const recruiters = await User.find({ role: "recruiter" }).select(
-      "name email status createdAt",
-    ).sort({createdAt:-1});
+    const recruiters = await User.find({ role: "recruiter" })
+      .select("name email status createdAt")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -69,7 +72,28 @@ export const updateRecruiterStatus = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: `Recruiter ${status} successfully`,
+      recruiter,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAdminAnalytics = async (req, res, next) => {
+  try {
+    const totalUsers = await User.countDocuments({ role: "user" });
+    const totalRecruiters = await User.countDocuments({ role: "recruiter" });
+    const totalJobs = await Job.countDocuments();
+    const totalApplications = await Application.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      analytics: {
+        totalUsers,
+        totalRecruiters,
+        totalJobs,
+        totalApplications,
+      },
     });
   } catch (error) {
     next(error);
