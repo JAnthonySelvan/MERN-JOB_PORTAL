@@ -71,6 +71,9 @@ const Navbar = () => {
               <NavLink to="/jobs" className={linkClass}>
                 Jobs
               </NavLink>
+              <NavLink to="/my-applications" className={linkClass}>
+                My Applications
+              </NavLink>
             </>
           )}
 
@@ -155,6 +158,9 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink to="/jobs" onClick={() => setMobileOpen(false)}>
                   Jobs
+                </NavLink>
+                <NavLink to="/my-applications" onClick={() => setMobileOpen(false)}>
+                  My Applications
                 </NavLink>
               </>
             )}

@@ -69,12 +69,13 @@ export const getApplicantsByJob = async (req, res, next) => {
 
 export const getUserApplications = async (req, res, next) => {
   try {
-    // const role = req.user.role
-
-    // if(role === "recruiter"){
+   
     const applications = await Application.find({
       applicant: req.user._id,
-    }).select("job");
+    })
+      .populate("job", "title location")
+      .populate("recruiter", "name email")
+      .sort({ createdAt: -1 });;
     return res.status(200).json({
       success: true,
       applications,

@@ -20,6 +20,7 @@ import PostJob from './pages/PostJob'
 import {Toaster} from "react-hot-toast"
 import EditJob from './pages/recruiter/EditJob'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import MyApplications from './pages/MyApplications'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -72,6 +73,10 @@ function App() {
 
         <Route element={<ProtectedRoute allowedRoles={["admin"]}/>}>
             <Route path='/admin/dashboard' element={<AdminDashboard/>} />
+        </Route>
+
+        <Route element={<ProtectedRoute allowedRoles={["user"]}/>}>
+            <Route path='/my-applications' element={<MyApplications/>}/>
         </Route>
       </Routes>
     </Router>

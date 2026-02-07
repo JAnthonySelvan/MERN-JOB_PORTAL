@@ -62,6 +62,7 @@ const applicationSlice = createSlice({
   name: "application",
   initialState: {
     appliedJobs: [],
+    myApplications: [],
     error: null,
     loading: false,
     applicants: [],
@@ -74,19 +75,30 @@ const applicationSlice = createSlice({
       .addCase(applyJob.fulfilled, (state, action) => {
         state.loading = false;
         state.appliedJobs.push(action.meta.arg);
-        toast.success("Job Applied Successfully")
-        
+        toast.success("Job Applied Successfully");
+
         // console.log(state.appliedJobs)
         // console.log(action.meta.arg)
       })
       .addCase(applyJob.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        toast.error("Application failed")
+        toast.error("Application failed");
         // console.log("error")
       })
+      .addCase(getMyApplications.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(getMyApplications.fulfilled, (state, action) => {
-        state.appliedJobs = action.payload.applications.map((app) => app.job);
+        state.loading=false
+        state.appliedJobs = action.payload.applications.map(
+          (app) => app.job._id,
+        );
+        state.myApplications = action.payload.applications;
+      })
+      .addCase(getMyApplications.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       })
       .addCase(fetchApplicants.fulfilled, (state, action) => {
         state.applicants = action.payload.applications;
@@ -95,9 +107,9 @@ const applicationSlice = createSlice({
         // console.log(action.payload)
         const updatedApp = action.payload.application;
         state.applicants.map((app) => {
-          app._id === updatedApp._id ?  updatedApp : app;
+          app._id === updatedApp._id ? updatedApp : app;
         });
-        toast.success("Updated Successfully")
+        toast.success("Updated Successfully");
       });
   },
 });

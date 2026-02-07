@@ -1,4 +1,4 @@
-import { applyJob } from "../features/application/applicationSlice";
+import { applyJob,getMyApplications } from "../features/application/applicationSlice";
 import { useDispatch, useSelector } from "react-redux";
 const JobCard = ({ job }) => {
   // console.log("Job card")
@@ -6,9 +6,10 @@ const JobCard = ({ job }) => {
   const { appliedJobs, loading, error } = useSelector(
     (state) => state.application,
   );
-
+  // console.log(appliedJobs)
+  //  const appliedJobsId = appliedJobs.map(job=>job._id)
   const isApplied = appliedJobs.includes(job._id);
-
+ 
   const handleApply = () => {
     dispatch(applyJob(job._id));
   };
