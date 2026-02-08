@@ -7,6 +7,16 @@ import applicationRoutes from "../src/routers/application.router.mjs"
 import errorMiddleware from "../src/middlewares/error.middleware.mjs"
 import userRouter from "../src/routers/user.routes.mjs"
 import adminRoutes from "../src/routers/admin.router.mjs"
+// import dotenv from "dotenv"
+// dotenv.config()
+
+// import mongoose from "mongoose";
+
+// mongoose
+//   .connect(process.env.MONGO_URI)
+//   .then(() => console.log("DB connected"))
+//   .catch((err) => console.log(err));
+
 
 
 const app = express();

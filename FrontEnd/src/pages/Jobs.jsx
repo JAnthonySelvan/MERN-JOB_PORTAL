@@ -5,7 +5,7 @@ import JobCard from "../components/JobCard";
 import Loader from "../components/Loader";
 import { getMyApplications } from "../features/application/applicationSlice";
 
-/* 🔹 Utility: build query safely */
+
 const buildQuery = ({ page, keyword, location }) => {
   let query = `?page=${page}`;
 
@@ -29,7 +29,7 @@ function Jobs() {
   useEffect(()=>{
     dispatch(getMyApplications())
   },[])
-  /* 🔹 Local UI state */
+
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,7 +61,7 @@ function Jobs() {
     [dispatch, keyword, location],
   );
 
-  /* 📄 Pagination */
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
 
@@ -74,7 +74,7 @@ function Jobs() {
     dispatch(fetchJobs(query));
   };
 
-  /* ⏳ Page loader */
+
   if (loading && !isSearching) return <Loader />;
 
   return (

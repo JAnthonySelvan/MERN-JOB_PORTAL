@@ -20,3 +20,18 @@ export const updateApplicationStatusApi = async(applicationId,status)=>{
     // console.log(response.data)
     return response.data
 }
+
+export const scheduleInterviewApi = async(applicationId,data)=>{
+    const response = await api.put(
+      `/application/${applicationId}/schedule-interview`,data
+    );
+    return response.data
+}
+
+export const respondInterviewApi = async(applicationId,status)=>{
+    const response = await api.put(
+      `/application/${applicationId}/respond-interview`,
+    {status:status});
+    console.log(response.data)
+     return { applicationId, interview: res.data.interview }
+}

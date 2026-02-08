@@ -2,6 +2,7 @@ import { Application } from "../models/application.model.mjs";
 import { Job } from "../models/job.model.mjs";
 import AppError from "../utils/AppError.mjs";
 import { sendEmail } from "../utils/sendEmail.mjs";
+import { generateInterviewICS } from "../utils/generateInterviewICS.mjs";
 
 export const applyJob = async (req, res, next) => {
   try {
@@ -73,7 +74,7 @@ export const getUserApplications = async (req, res, next) => {
     const applications = await Application.find({
       applicant: req.user._id,
     })
-      .populate("job", "title location")
+      .populate({path:"job",select:"title location"})
       .populate("recruiter", "name email")
       .sort({ createdAt: -1 });;
     return res.status(200).json({
@@ -140,3 +141,175 @@ export const updateApplicationStatus = async (req, res, next) => {
     next(error);
   }
 };
+
+export const scheduleInterview = async (req, res, next) => {
+  try {
+    const { applicationId } = req.params;
+    const { mode, date, time, link, location } = req.body;
+
+    const application = await Application.findOne({
+      _id: applicationId,
+      recruiter: req.user._id,
+      status: "shortlisted",
+    }).populate("applicant","email name");
+
+    if (!application) {
+      return next(new AppError("Application not found", 404));
+    }
+    if (application.interview) {
+      return next(new AppError("Interview already scheduled", 400));
+    }
+
+    application.interview = {
+      mode,
+      date,
+      time,
+      link: mode === "online" ? link : null,
+      location: mode === "offline" ? location : null,
+      status: "scheduled",
+    };
+
+    await application.save();
+    const icsContent = await generateInterviewICS(
+      application.interview,
+      application.applicant.email,
+    );
+try{
+await sendEmail({
+      to: application.applicant.email,
+      subject: "Interview Scheduled – Job Junction",
+      html: `
+    <h3>Interview Scheduled</h3>
+    <p>Hello ${application.applicant.name},</p>
+    <p>Your interview has been scheduled.</p>
+    <p><b>Mode:</b> ${application.interview.mode}</p>
+    <p><b>Date:</b> ${new Date(application.interview.date).toDateString()}</p>
+    <p><b>Time:</b> ${application.interview.time}</p>
+  `,
+      attachments: [
+        {
+          filename: "interview.ics",
+          content: icsContent,
+          contentType: "text/calendar",
+        },
+      ],
+    });
+}
+   catch(err){
+        console.log("Email failed")
+   } 
+
+    res.status(200).json({
+      success: true,
+      interview: application.interview,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const respondInterview = async (req, res, next) => {
+  try {
+    const { applicationId } = req.params;
+    const { status } = req.body; 
+
+    const application = await Application.findOne({
+      _id: applicationId,
+      applicant: req.user._id,
+    });
+
+    if (!application || !application.interview) {
+      return next(new AppError("Interview not found", 404));
+    }
+
+    application.interview.status = status;
+    await application.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Interview ${status}`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const editInterview = async (req, res, next) => {
+  try {
+    const { applicationId } = req.params;
+
+    const application = await Application.findOne({
+      _id: applicationId,
+      recruiter: req.user._id,
+    }).populate("applicant" ,"name email");
+
+    if (!application || !application.interview) {
+      return next(new AppError("Interview not found", 404));
+    }
+
+    Object.assign(application.interview, req.body);
+    application.interview.status = "scheduled"; 
+
+    await application.save();
+    const icsContent = await generateInterviewICS(
+      application.interview,
+      application.applicant.email,
+    );
+   try {
+     await sendEmail({
+       to: application.applicant.email,
+       subject: "Interview ReScheduled – Job Junction",
+       html: `
+    <h3>Interview Scheduled</h3>
+    <p>Hello ${application.applicant.name},</p>
+    <p>Your interview has been scheduled.</p>
+    <p><b>Mode:</b> ${application.interview.mode}</p>
+    <p><b>Date:</b> ${new Date(application.interview.date).toDateString()}</p>
+    <p><b>Time:</b> ${application.interview.time}</p>
+  `,
+       attachments: [
+         {
+           filename: "interview.ics",
+           content: icsContent,
+           contentType: "text/calendar",
+         },
+       ],
+     });
+   } catch (err) {
+     console.log("Email failed");
+   }
+
+    res.status(200).json({
+      success: true,
+      interview: application.interview,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const cancelInterview = async (req, res, next) => {
+  try {
+    const { applicationId } = req.params;
+
+    const application = await Application.findOne({
+      _id: applicationId,
+      recruiter: req.user._id,
+    });
+
+    if (!application || !application.interview) {
+      return next(new AppError("Interview not found", 404));
+    }
+
+    application.interview = null;
+    await application.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Interview cancelled",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+

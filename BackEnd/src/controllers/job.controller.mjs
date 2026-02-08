@@ -1,4 +1,5 @@
 import { Job } from "../models/job.model.mjs";
+import { Application } from "../models/application.model.mjs";
 import AppError from "../utils/AppError.mjs";
 
 export const createJob = async(req,res,next)=>{
@@ -110,6 +111,7 @@ export const updateJob = async (req, res, next) => {
 };
 export const deleteJob = async (req, res, next) => {
   try {
+    const jobId = req.params.id
     const job = await Job.findById(req.params.id);
 
     if (!job) {
@@ -121,7 +123,11 @@ export const deleteJob = async (req, res, next) => {
     }
 
     await job.deleteOne();
-
+    
+    await Application.updateMany(
+      { job: jobId },
+      { $set: { jobDeleted: true } },
+    );
     res.status(200).json({
       success: true,
       message: "Job deleted successfully",

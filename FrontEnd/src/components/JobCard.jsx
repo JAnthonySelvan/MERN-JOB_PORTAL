@@ -6,8 +6,6 @@ const JobCard = ({ job }) => {
   const { appliedJobs, loading, error } = useSelector(
     (state) => state.application,
   );
-  // console.log(appliedJobs)
-  //  const appliedJobsId = appliedJobs.map(job=>job._id)
   const isApplied = appliedJobs.includes(job._id);
  
   const handleApply = () => {

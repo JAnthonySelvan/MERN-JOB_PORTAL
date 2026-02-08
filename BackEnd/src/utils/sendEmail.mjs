@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export const sendEmail = async ({ to, subject, html }) => {
+export const sendEmail = async ({ to, subject, html,attachments=[] }) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -18,7 +18,8 @@ export const sendEmail = async ({ to, subject, html }) => {
     from: `"Job Junction" <${process.env.EMAIL_USER}>`,
     to,
     subject,
-    html
+    html,
+    attachments
   });
 };
 

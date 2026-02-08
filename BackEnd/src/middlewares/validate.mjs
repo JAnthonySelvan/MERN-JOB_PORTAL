@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import AppError from "../utils/AppError.mjs";
 
 const validate = (req, res, next) => {
-console.log("validate typeof next:", typeof next);
+// console.log("validate typeof next:", typeof next);
 
   const errors = validationResult(req);
 
