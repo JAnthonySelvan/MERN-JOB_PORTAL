@@ -18,9 +18,9 @@ function ResumeUpload() {
 
         dispatch(getMe())
 
-        if(response.status){
-          console.log(response.status)
-        }
+        // if(response.status){
+        //   console.log(response.status)
+        // }
             
     }
   return (

@@ -10,12 +10,12 @@ function ProtectedRoute({allowedRoles}) {
   }
 
   if(!isAuthenticated){
-    console.log(isAuthenticated)
+    // console.log(isAuthenticated)
     return <Navigate to="/login" replace/>
   }
 
   if(allowedRoles && !allowedRoles.includes(user?.role)){
-    console.log(user)
+    // console.log(user)
     return <Navigate to="/unautherized" replace/>
   }
   return <Outlet/>

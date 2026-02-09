@@ -1,5 +1,5 @@
 import express from "express"
-import { register,login,logout } from "../controllers/auth.controller.mjs"
+import { register,login,logout,forgotPassword,resetPassword} from "../controllers/auth.controller.mjs"
 import { registerValidator } from "../validators/auth.validator.mjs"
 import validate from "../middlewares/validate.mjs"
 import {protect,authorize} from "../middlewares/auth.miidleware.mjs";
@@ -19,7 +19,8 @@ router.get("/me",protect,(req,res,next)=>{
         }
         
 })
-
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 
 // router.get("/users",protect,authorize("admin"),async(req,res)=>{
 //         const users = await User.find()

@@ -119,7 +119,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
-        console.log(action.payload)
+        // console.log(action.payload)
         // state.error = action.payload; // STRING ONLY
       });
   },

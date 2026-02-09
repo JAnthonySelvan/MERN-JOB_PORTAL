@@ -52,7 +52,7 @@ export const updateApplicationStatus = createAsyncThunk(
     try {
       return await updateApplicationStatusApi(applicationId, status);
     } catch (error) {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       return thunkApi.rejectWithValue(
         error.response?.data?.message || "Failed to update status",
       );
@@ -136,7 +136,7 @@ const applicationSlice = createSlice({
 
       .addCase(applyJob.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload)
+        // console.log(action.payload)
       
         state.appliedJobs.push(action.payload?.application.job);
 

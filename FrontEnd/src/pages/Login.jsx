@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import Loader from "../components/Loader";
+import PasswordInput from "../components/PasswordInput";
 
 function Login() {
   const dispatch = useDispatch();
@@ -58,14 +59,30 @@ function Login() {
           placeholder="Email"
         />
 
-        <input
+        {/* <input
           className="w-full mb-3 p-2 border rounded dark:bg-gray-700"
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
           placeholder="Password"
+        /> */}
+
+        <PasswordInput
+          value={formData.password}
+          name="password"
+          onChange={handleChange}
+          placeholder="Password"
         />
+
+        <div className="text-right mb-3">
+          <Link
+            to="/forgot-password"
+            className="text-sm text-blue-600 hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </div>
 
         {error && (
           <p className="text-red-500">

@@ -32,6 +32,6 @@ export const respondInterviewApi = async(applicationId,status)=>{
     const response = await api.put(
       `/application/${applicationId}/respond-interview`,
     {status:status});
-    console.log(response.data)
+    // console.log(response.data)
      return { applicationId, interview: res.data.interview }
 }

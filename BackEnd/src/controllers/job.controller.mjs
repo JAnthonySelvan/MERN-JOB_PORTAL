@@ -53,8 +53,8 @@ export const getAllJobs =async(req,res,next)=>{
           };
         }
 
-        console.log("REQ QUERY:", req.query);
-        console.log("QUERY OBJ:", queryObj);
+        // console.log("REQ QUERY:", req.query);
+        // console.log("QUERY OBJ:", queryObj);
 
 
         const totalJobs = await Job.countDocuments(queryObj)

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { registerUser } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
+import { Controller } from "react-hook-form";
+import PasswordInput from "../components/PasswordInput";
 
 function Register() {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ function Register() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -53,11 +56,18 @@ function Register() {
         {errors.email && (
           <p className="text-red-500 text-sm">{errors.email.message}</p>
         )}
-        <input
-          className="w-full mb-2 p-2 border rounded dark:bg-gray-700"
-          type="password"
-          placeholder="password"
-          {...register("password", { required: "Password is required!" })}
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: "Password is required!" }}
+          render={({ field }) => (
+            <PasswordInput
+              name={field.name}
+              value={field.value || ""}
+              onChange={field.onChange}
+              placeholder="Password"
+            />
+          )}
         />
         {errors.password && (
           <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -82,7 +92,7 @@ function Register() {
           {loading ? "Registering..." : "Register"}
         </button>
         <p className="text-center">
-          If you already have an account 
+          If you already have an account
           <Link
             className="text-red-600"
             onClick={() => {

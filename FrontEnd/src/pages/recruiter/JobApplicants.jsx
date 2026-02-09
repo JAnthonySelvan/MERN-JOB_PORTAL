@@ -119,6 +119,35 @@ const JobApplicants = () => {
                     onClose={() => setEditId(null)}
                   />
                 )}
+
+                {app.interview.status === "accepted" && (
+                  <div>
+                    <p>
+                      Mode:{" "}
+                      <span className="font-medium">{app.interview.mode}</span>
+                    </p>
+
+                    <p>Date: {new Date(app.interview.date).toDateString()}</p>
+
+                    <p>Time: {app.interview.time}</p>
+
+                    {app.interview.mode === "online" && (
+                      <a
+                        href={app.interview.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-600 underline"
+                      >
+                        Join Meeting
+                      </a>
+                    )}
+
+                    {app.interview.mode === "offline" && (
+                      <p>Location: {app.interview.location}</p>
+                    )}
+
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -21,6 +21,8 @@ import {Toaster} from "react-hot-toast"
 import EditJob from './pages/recruiter/EditJob'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import MyApplications from './pages/MyApplications'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -71,13 +73,15 @@ function App() {
           <Route path="/recruiter/edit-job/:id" element={<EditJob />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["admin"]}/>}>
-            <Route path='/admin/dashboard' element={<AdminDashboard/>} />
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["user"]}/>}>
-            <Route path='/my-applications' element={<MyApplications/>}/>
+        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+          <Route path="/my-applications" element={<MyApplications />} />
         </Route>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

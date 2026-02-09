@@ -83,7 +83,7 @@ const jobSlice = createSlice(
                 }
               })
               .addCase(fetchJobs.fulfilled, (state, action) => {
-                console.log(action.payload.jobs);
+                // console.log(action.payload.jobs);
                 ((state.loading = false),
                   (state.isSearching = false),
                   (state.jobs = action.payload.jobs),

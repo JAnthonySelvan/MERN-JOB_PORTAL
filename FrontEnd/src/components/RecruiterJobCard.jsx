@@ -11,7 +11,7 @@ const RecruiterJobCard = ({ job }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const mode = useSelector((state)=>state.theme.mode)
-  console.log(typeof(mode))
+  // console.log(typeof(mode))
 
   const handleDelete = () => {
     Swal.fire({
