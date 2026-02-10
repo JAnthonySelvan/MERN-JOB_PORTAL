@@ -1,6 +1,7 @@
 import { Job } from "../models/job.model.mjs";
 import { Application } from "../models/application.model.mjs";
 import AppError from "../utils/AppError.mjs";
+import { User } from "../models/user.model.mjs";
 
 export const createJob = async(req,res,next)=>{
     try{
@@ -137,3 +138,35 @@ export const deleteJob = async (req, res, next) => {
   }
 };
 
+export const toggleSaveJob = async (req, res, next) => {
+  const { jobId } = req.params;
+
+  const user = await User.findById(req.user._id);
+
+  const alreadySaved = user.savedJobs.includes(jobId);
+
+  if (alreadySaved) {
+    user.savedJobs = user.savedJobs.filter((id) => id.toString() !== jobId);
+  } else {
+    user.savedJobs.push(jobId);
+  }
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    savedJobs: user.savedJobs,
+  });
+};
+
+export const getSavedJobs = async (req, res) => {
+  const user = await User.findById(req.user._id).populate({
+    path: "savedJobs",
+    match: { isDeleted: false }, 
+  });
+
+  res.status(200).json({
+    success: true,
+    jobs: user.savedJobs,
+  });
+};

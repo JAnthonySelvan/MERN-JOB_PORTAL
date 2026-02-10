@@ -74,6 +74,9 @@ const Navbar = () => {
               <NavLink to="/my-applications" className={linkClass}>
                 My Applications
               </NavLink>
+              <NavLink to="/saved-jobs" className={linkClass}>
+                Saved Jobs
+              </NavLink>
             </>
           )}
 
@@ -159,8 +162,14 @@ const Navbar = () => {
                 <NavLink to="/jobs" onClick={() => setMobileOpen(false)}>
                   Jobs
                 </NavLink>
-                <NavLink to="/my-applications" onClick={() => setMobileOpen(false)}>
+                <NavLink
+                  to="/my-applications"
+                  onClick={() => setMobileOpen(false)}
+                >
                   My Applications
+                </NavLink>
+                <NavLink to="/saved-jobs" onClick={() => setMobileOpen(false)}>
+                  Saved Jobs
                 </NavLink>
               </>
             )}

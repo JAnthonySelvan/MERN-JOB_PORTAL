@@ -8,7 +8,7 @@ const PasswordInput = ({ value, onChange, name, placeholder }) => {
     <div className="relative mb-3">
       <input
         type={show ? "text" : "password"}
-        name={name} // ✅ IMPORTANT
+        name={name} 
         value={value}
         onChange={onChange}
         placeholder={placeholder}

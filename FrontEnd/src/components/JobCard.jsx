@@ -1,24 +1,40 @@
-import { applyJob,getMyApplications } from "../features/application/applicationSlice";
+import { applyJob } from "../features/application/applicationSlice";
+import { toggleSaveJob } from "../features/job/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
+
 const JobCard = ({ job }) => {
-  // console.log("Job card")
   const dispatch = useDispatch();
-  const { appliedJobs, loading, error } = useSelector(
-    (state) => state.application,
-  );
+
+  const { appliedJobs, loading } = useSelector((state) => state.application);
+
+  const { savedJobs } = useSelector((state) => state.jobs);
+
   const isApplied = appliedJobs.includes(job._id);
- 
+  const isSaved = savedJobs?.includes(job._id);
+
   const handleApply = () => {
     dispatch(applyJob(job._id));
   };
 
+  const handleSave = () => {
+    dispatch(toggleSaveJob(job._id));
+  };
+
   return (
-    <div className="rounded-xl border shadow-sm hover:shadow-md transition p-5 bg-white dark:bg-gray-800">
+    <div className="relative rounded-xl border shadow-sm hover:shadow-md transition p-5 bg-white dark:bg-gray-800">
       
+      <button
+        onClick={handleSave}
+        className="absolute top-3 right-3 text-xl"
+        title={isSaved ? "Unsave Job" : "Save Job"}
+      >
+        {isSaved ? "⭐" : "☆"}
+      </button>
 
       <h3 className="text-lg font-semibold mb-1">{job.title}</h3>
       <p className="text-sm text-gray-500">{job.location}</p>
       <p className="mt-3 text-sm line-clamp-3">{job.description}</p>
+
       <button
         disabled={isApplied || loading}
         onClick={handleApply}
@@ -33,5 +49,3 @@ const JobCard = ({ job }) => {
 };
 
 export default JobCard;
-
- 

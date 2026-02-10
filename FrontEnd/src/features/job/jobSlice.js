@@ -2,6 +2,7 @@ import { data } from "react-router-dom";
 import { fetchJobApi,fetchMyJobsApi,deleteJobApi,updateJobApi,createJobApi } from "./jobApi";
 import toast from "react-hot-toast";
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
+import api from "../../services/axios";
 
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs",async(query,thunkApi)=>{
     try{
@@ -58,89 +59,107 @@ export const updateJob = createAsyncThunk("jobs/update",async({id,data},thunkApi
     }
 })
 
-const jobSlice = createSlice(
-    {
-        name : "jobs",
-        initialState : {
-            jobs : [],
-            error : null,
-            loading : false,
-            isSearching : false,
-            page:null,
-            pages:null
+export const toggleSaveJob = createAsyncThunk(
+  "jobs/toggleSave",
+  async (jobId) => {
+    const res = await api.post(`/jobs/save/${jobId}`);
+    return res.data.savedJobs;
+  },
+);
 
-        },
-        reducers :{
+export const fetchSavedJobs = createAsyncThunk("jobs/fetchSaved", async () => {
+  const res = await api.get("/jobs/saved");
+  return res.data.jobs;
+});
 
-        },
-        extraReducers:(builder)=>{
-            builder
-              .addCase(fetchJobs.pending, (state) => {
-                if (state.jobs.length == 0) {
-                  ((state.loading = true), (state.error = null));
-                } else {
-                  state.isSearching = true;
-                }
-              })
-              .addCase(fetchJobs.fulfilled, (state, action) => {
-                // console.log(action.payload.jobs);
-                ((state.loading = false),
-                  (state.isSearching = false),
-                  (state.jobs = action.payload.jobs),
-                  (state.error = null),
-                  (state.page = action.payload.page),
-                  (state.pages = action.payload.pages));
-                // console.log(state.jobs)
-              })
-              .addCase(fetchJobs.rejected, (state, action) => {
-                ((state.loading = false), (state.error = action.payload));
-              })
-              .addCase(fetchMyJobs.fulfilled, (state, action) => {
-                state.jobs = action.payload.jobs;
-              })
-              .addCase(deleteJob.pending, (state) => {
-                state.loading = true;
-              })
-              .addCase(deleteJob.fulfilled, (state, action) => {
-                state.jobs = state.jobs.filter(
-                  (job) => job._id !== action.payload,
-                );
-                state.loading = false;
-                toast.success("Job deleted successfully");
-              })
-              .addCase(deleteJob.rejected, (state, action) => {
-                state.error = action.payload;
-                toast.error(action.payload);
-              })
-              .addCase(updateJob.pending, (state, action) => {
-                state.loading = true;
-              })
-              .addCase(updateJob.fulfilled, (state, action) => {
-                state.jobs = state.jobs.map((job) =>
-                  job._id === action.payload._id ? action.payload : job,
-                );
-                toast.success("Job updated successfully");
-              })
-              .addCase(updateJob.rejected, (state, action) => {
-                state.error = action.payload;
-                toast.error(action.payload);
-              })
-              .addCase(createJob.pending, (state) => {
-                state.loading = true;
-              })
-
-              .addCase(createJob.fulfilled, (state) => {
-                state.loading = false;
-                toast.success("Job created Successfully");
-              })
-
-              .addCase(createJob.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
-                toast.error(action.payload);
-              });
+const jobSlice = createSlice({
+  name: "jobs",
+  initialState: {
+    jobs: [],
+    error: null,
+    loading: false,
+    isSearching: false,
+    page: null,
+    pages: null,
+    savedJobs: [],
+    savedJobsData:[]
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchJobs.pending, (state) => {
+        if (state.jobs.length == 0) {
+          ((state.loading = true), (state.error = null));
+        } else {
+          state.isSearching = true;
         }
-    }
-)
+      })
+      .addCase(fetchJobs.fulfilled, (state, action) => {
+        // console.log(action.payload.jobs);
+        ((state.loading = false),
+          (state.isSearching = false),
+          (state.jobs = action.payload.jobs),
+          (state.error = null),
+          (state.page = action.payload.page),
+          (state.pages = action.payload.pages));
+        // console.log(state.jobs)
+      })
+      .addCase(fetchJobs.rejected, (state, action) => {
+        ((state.loading = false), (state.error = action.payload));
+      })
+      .addCase(fetchMyJobs.fulfilled, (state, action) => {
+        state.jobs = action.payload.jobs;
+      })
+      .addCase(deleteJob.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteJob.fulfilled, (state, action) => {
+        state.jobs = state.jobs.filter((job) => job._id !== action.payload);
+        state.loading = false;
+        toast.success("Job deleted successfully");
+      })
+      .addCase(deleteJob.rejected, (state, action) => {
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+      .addCase(updateJob.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updateJob.fulfilled, (state, action) => {
+        state.jobs = state.jobs.map((job) =>
+          job._id === action.payload._id ? action.payload : job,
+        );
+        toast.success("Job updated successfully");
+      })
+      .addCase(updateJob.rejected, (state, action) => {
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+      .addCase(createJob.pending, (state) => {
+        state.loading = true;
+      })
+
+      .addCase(createJob.fulfilled, (state) => {
+        state.loading = false;
+        toast.success("Job created Successfully");
+      })
+
+      .addCase(createJob.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+      .addCase(toggleSaveJob.fulfilled, (state, action) => {
+        state.savedJobs = action.payload;
+      })
+
+      .addCase(fetchSavedJobs.fulfilled, (state, action) => {
+        state.savedJobs = action.payload.map((job) => job._id);
+        state.savedJobsData = action.payload;
+        // console.log(state.savedJobs)
+      });
+
+  },
+});
 
 export default jobSlice.reducer

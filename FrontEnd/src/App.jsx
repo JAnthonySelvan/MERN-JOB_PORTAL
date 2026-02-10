@@ -16,6 +16,7 @@ import JobApplicants from './pages/recruiter/JobApplicants'
 import Navbar from './components/Navbar'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
+import Footer from './components/Footer'
 import PostJob from './pages/PostJob'
 import {Toaster} from "react-hot-toast"
 import EditJob from './pages/recruiter/EditJob'
@@ -23,6 +24,8 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import MyApplications from './pages/MyApplications'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import SavedJobs from './pages/SavedJobs'
+import Layout from './components/Layout'
 // import Logout from './pages/Logout'
 function App() {
   const dispatch = useDispatch()
@@ -36,52 +39,59 @@ function App() {
   },[mode])
   return (
     <Router>
-      <Navbar />
       <Toaster position="top-right" />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/unautherized" element={<UnAutherized />} />
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
-          <Route path="/recruiter/dashboard" element={<RecruiterDashBoard />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/jobs" element={<Jobs />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
-          <Route path="/recruiter/jobs" element={<MyJobs />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
-          <Route
-            path="/recruiter/jobs/:jobId/applicants"
-            element={<JobApplicants />}
-          />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
-          <Route path="/recruiter/post-job" element={<PostJob />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
-          <Route path="/recruiter/edit-job/:id" element={<EditJob />} />
-        </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/unautherized" element={<UnAutherized />} />
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+            <Route
+              path="/recruiter/dashboard"
+              element={<RecruiterDashBoard />}
+            />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/jobs" element={<Jobs />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+            <Route path="/recruiter/jobs" element={<MyJobs />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+            <Route
+              path="/recruiter/jobs/:jobId/applicants"
+              element={<JobApplicants />}
+            />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+            <Route path="/recruiter/post-job" element={<PostJob />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["recruiter"]} />}>
+            <Route path="/recruiter/edit-job/:id" element={<EditJob />} />
+          </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/my-applications" element={<MyApplications />} />
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/my-applications" element={<MyApplications />} />
+          </Route>
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/saved-jobs" element={<SavedJobs />} />
+          </Route>
         </Route>
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
   );
