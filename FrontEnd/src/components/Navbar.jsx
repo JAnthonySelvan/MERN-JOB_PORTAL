@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../features/auth/authSlice";
 import ThemeToggle from "./themeToggle";
 import { useState, useRef, useEffect } from "react";
-
+import logo from "../assets/logo.png"
 
 const getInitials = (name = "") =>
   name
@@ -54,11 +54,16 @@ const Navbar = () => {
 
   return (
     <>
-
       <nav className="w-full h-14 px-4 flex items-center bg-white dark:bg-slate-900 shadow">
-
-        <Link to="/" className="text-xl font-bold">
-          JobJunction
+        <Link to="/" className="flex items-center gap-2">
+          <img
+            src={logo}
+            alt="JobJunction Logo"
+            className="h-12 w-auto mt-1 object-contain"
+          />
+          <span className="hidden sm:block text-2xl font-semibold dark:text-white">
+            JobJunction
+          </span>
         </Link>
 
         <div className="ml-auto hidden md:flex items-center gap-6">
