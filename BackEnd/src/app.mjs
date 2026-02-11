@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import helmet from "helmet"
 import cookieParser from "cookie-parser"
 import authRoutes from "../src/routers/auth.router.mjs"
 import jobRoutes from "../src/routers/job.router.mjs"
@@ -25,10 +26,11 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
+app.use(helmet({crossOriginResourcePolicy:false}))
 app.use("/uploads", express.static("uploads"));
 
 

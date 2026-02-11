@@ -57,7 +57,7 @@ export const updateRecruiterStatus = async (req, res, next) => {
 
     if (status === "approved") {
       try {
-        await sendEmail({
+        sendEmail({
           to: recruiter.email,
           subject: "Recruiter Account Approved",
           html: `

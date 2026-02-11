@@ -4,7 +4,7 @@ import { logoutUser } from "../features/auth/authSlice";
 import ThemeToggle from "./themeToggle";
 import { useState, useRef, useEffect } from "react";
 
-/* Utils */
+
 const getInitials = (name = "") =>
   name
     .split(" ")
@@ -35,7 +35,7 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  /* Close dropdown on outside click (SAFE) */
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -54,14 +54,13 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ================= TOP NAV ================= */}
+
       <nav className="w-full h-14 px-4 flex items-center bg-white dark:bg-slate-900 shadow">
-        {/* Logo */}
+
         <Link to="/" className="text-xl font-bold">
-          JobPortal
+          JobJunction
         </Link>
 
-        {/* ================= DESKTOP ================= */}
         <div className="ml-auto hidden md:flex items-center gap-6">
           {isAuthenticated && user?.role === "user" && (
             <>

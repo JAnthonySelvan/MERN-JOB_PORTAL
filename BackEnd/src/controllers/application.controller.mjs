@@ -17,7 +17,7 @@ export const applyJob = async (req, res, next) => {
       recruiter: job.recruiter,
     });
     try {
-      await sendEmail({
+       sendEmail({
         to: req.user.email,
         subject: "Application Submitted Successfully",
         html: `
@@ -120,7 +120,7 @@ export const updateApplicationStatus = async (req, res, next) => {
       return next(new AppError("Application not found", 404));
     }
     try {
-      await sendEmail({
+       sendEmail({
         to: application.applicant.email,
         subject: "Application Status Updated",
         html: `
@@ -175,7 +175,7 @@ export const scheduleInterview = async (req, res, next) => {
       application.applicant.email,
     );
 try{
-await sendEmail({
+ sendEmail({
       to: application.applicant.email,
       subject: "Interview Scheduled – Job Junction",
       html: `
@@ -256,7 +256,7 @@ export const editInterview = async (req, res, next) => {
       application.applicant.email,
     );
    try {
-     await sendEmail({
+      sendEmail({
        to: application.applicant.email,
        subject: "Interview ReScheduled – Job Junction",
        html: `

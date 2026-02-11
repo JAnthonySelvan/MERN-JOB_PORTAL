@@ -26,7 +26,7 @@ export const register = async (req, res, next) => {
   });
   if (role === "user") {
     try {
-      await sendEmail({
+      sendEmail({
         to: email,
         subject: "Welcome to Job Junction 🎉",
         html: `
@@ -41,7 +41,7 @@ export const register = async (req, res, next) => {
   }
   if (role === "recruiter") {
     try {
-      await sendEmail({
+      sendEmail({
         to: email,
         subject: "Welcome to Job Junction 🎉",
         html: `
@@ -117,7 +117,7 @@ export const forgotPassword = async (req, res, next) => {
   const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
   try {
-    await sendEmail({
+    sendEmail({
       to: user.email,
       subject: "Password Reset Request",
       html: `
