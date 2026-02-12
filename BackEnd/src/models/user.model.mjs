@@ -34,7 +34,13 @@ const userSchema = new mongoose.Schema(
     resume: {
       type: String,
     },
+    resume: {
+      type: String,
+    },
 
+    resumePublicId: {
+      type: String,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
@@ -52,7 +58,7 @@ const userSchema = new mongoose.Schema(
     savedJobs: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Job",
+        ref: "Job",
       },
     ],
   },

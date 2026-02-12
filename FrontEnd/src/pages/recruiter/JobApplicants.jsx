@@ -51,7 +51,7 @@ const JobApplicants = () => {
 
             {app.applicant.resume && (
               <a
-                href={`http://localhost:5000${app.applicant.resume}`}
+                href={app.applicant.resume}
                 target="_blank"
                 rel="noreferrer"
                 className="text-blue-600 mt-2"

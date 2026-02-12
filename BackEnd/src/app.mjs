@@ -26,12 +26,12 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "http://localhost:5173",
     credentials: true,
   }),
 );
 app.use(helmet({crossOriginResourcePolicy:false}))
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 
 app.get("/",(req,res)=>{

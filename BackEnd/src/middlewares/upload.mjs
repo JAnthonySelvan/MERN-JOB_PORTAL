@@ -1,25 +1,20 @@
 import multer from "multer";
+import AppError from "../utils/AppError.mjs";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/resumes");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${req.user._id}-${Date.now()}-${file.originalname}`);
+const storage = multer.memoryStorage();
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Only image resumes are allowed!", 400), false);
+  }
+};
+
+export const uploadResume = multer({
+  storage,
+  fileFilter,
+  limits: {
+    fileSize: 2 * 1024 * 1024,
   },
 });
-
-const fileFilter = (req,file,cb)=>{
-    if(file.mimetype==="application/pdf"){
-        cb(null,true)
-    }
-    else{
-        cb(new Error("Only pdf files are allowed!",false))
-    }
-}
-
-export const uploadResume = multer(
-    {
-        storage,fileFilter
-    }
-)
