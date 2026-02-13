@@ -4,7 +4,6 @@ import { logoutUser } from "../features/auth/authSlice";
 import ThemeToggle from "./themeToggle";
 import { useState, useRef, useEffect } from "react";
 
-
 const getInitials = (name = "") =>
   name
     .split(" ")
@@ -18,7 +17,8 @@ const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [desktopProfileOpen, setDesktopProfileOpen] = useState(false);
+  const [mobileProfileOpen, setMobileProfileOpen] = useState(false);
 
   const profileButtonRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -29,13 +29,20 @@ const Navbar = () => {
       : "text-gray-700 dark:text-gray-300 hover:text-blue-600";
 
   const handleLogout = async () => {
-    await dispatch(logoutUser());
-    setProfileOpen(false);
-    setMobileOpen(false);
-    navigate("/login");
+    try {
+      await dispatch(logoutUser()).unwrap();
+
+      setDesktopProfileOpen(false);
+      setMobileProfileOpen(false);
+      setMobileOpen(false);
+
+      navigate("/login", { replace: true });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-
+  // Close desktop dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -44,7 +51,7 @@ const Navbar = () => {
         profileButtonRef.current &&
         !profileButtonRef.current.contains(e.target)
       ) {
-        setProfileOpen(false);
+        setDesktopProfileOpen(false);
       }
     };
 
@@ -54,9 +61,8 @@ const Navbar = () => {
 
   return (
     <>
-
+      {/* ================= DESKTOP NAV ================= */}
       <nav className="w-full h-14 px-4 flex items-center bg-white dark:bg-slate-900 shadow">
-
         <Link to="/" className="text-xl font-bold">
           JobJunction
         </Link>
@@ -92,23 +98,23 @@ const Navbar = () => {
 
           <ThemeToggle />
 
-          {/* Profile Dropdown (Desktop) */}
           {isAuthenticated && (
             <div className="relative">
               <button
                 ref={profileButtonRef}
-                onClick={() => setProfileOpen(!profileOpen)}
+                onClick={() => setDesktopProfileOpen(!desktopProfileOpen)}
                 className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold"
               >
                 {getInitials(user?.name)}
               </button>
 
-              {profileOpen && (
+              {desktopProfileOpen && (
                 <div
                   ref={dropdownRef}
                   className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded shadow"
                 >
                   <button
+                    type="button"
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
@@ -151,7 +157,6 @@ const Navbar = () => {
         >
           <div className="text-xl font-bold mb-6">JobPortal</div>
 
-          {/* Links */}
           <div className="flex flex-col gap-4 flex-1">
             {isAuthenticated && user?.role === "user" && (
               <>
@@ -193,11 +198,12 @@ const Navbar = () => {
             <ThemeToggle />
           </div>
 
-          {/* Profile Section (Mobile) */}
+          {/* ================= MOBILE PROFILE ================= */}
           {isAuthenticated && (
             <div className="border-t pt-4">
               <button
-                onClick={() => setProfileOpen(!profileOpen)}
+                type="button"
+                onClick={() => setMobileProfileOpen(!mobileProfileOpen)}
                 className="flex items-center gap-3"
               >
                 <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
@@ -206,8 +212,15 @@ const Navbar = () => {
                 <span>{user?.name}</span>
               </button>
 
-              {profileOpen && (
-                <button onClick={handleLogout} className="mt-3 text-red-500">
+              {mobileProfileOpen && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLogout();
+                  }}
+                  className="mt-3 text-red-500"
+                >
                   Logout
                 </button>
               )}
