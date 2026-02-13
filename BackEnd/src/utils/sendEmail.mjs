@@ -1,31 +1,27 @@
-import nodemailer from "nodemailer";
+import SibApiV3Sdk from "@getbrevo/brevo";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false, 
-  auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
-  },
-});
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
-export const sendEmail = async ({ to, subject, html, attachments = [] }) => {
+apiInstance.setApiKey(
+  SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY,
+);
+
+export const sendEmail = async ({ to, subject, html }) => {
   try {
-    if (!to) {
-      console.log("No recipient email provided");
-      return;
-    }
+    if (!to) return;
 
-    const info = await transporter.sendMail({
-      from: `"JobJunction" <${process.env.BREVO_USER}>`,
-      to,
+    await apiInstance.sendTransacEmail({
+      sender: {
+        name: "JobJunction",
+        email: "jobjunctionhq@gmail.com",
+      },
+      to: [{ email: to }],
       subject,
-      html,
-      attachments,
+      htmlContent: html,
     });
 
-    console.log("Email sent:", info.messageId);
+    console.log("Email sent successfully");
   } catch (error) {
     console.error("Email sending failed:", error.message);
   }
