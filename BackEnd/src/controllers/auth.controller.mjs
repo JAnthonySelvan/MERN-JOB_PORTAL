@@ -94,13 +94,17 @@ export const login = async (req, res, next) => {
   });
 };
 
-export const logout = (req, res, next) => {
-  res.cookie("token", "", {
+export const logout = (req, res) => {
+  res.clearCookie("token", {
     httpOnly: true,
-    expires: new Date(0),
+    secure: true,
+    sameSite: "none",
   });
 
-  res.status(200).json({ message: "Logged out successfully" });
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
 };
 
 export const forgotPassword = async (req, res, next) => {
