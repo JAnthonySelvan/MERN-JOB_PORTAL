@@ -1,7 +1,7 @@
+import cloudinary from "../config/cloudinary.mjs";
+import streamifier from "streamifier";
 import { User } from "../models/user.model.mjs";
 import AppError from "../utils/AppError.mjs";
-import cloudinary from "../config/cloudinary.mjs";
-import streamifier from 'streamifier'
 
 export const uploadUserResume = async (req, res, next) => {
   try {
@@ -18,7 +18,10 @@ export const uploadUserResume = async (req, res, next) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: "resumes",
-          resource_type: "image",
+          resource_type: "raw", // ✅ RAW
+          format: "pdf", // ✅ Force PDF
+          type: "upload", // ✅ Old version style
+          public_id: `${req.user._id}-${Date.now()}`,
         },
         (error, result) => {
           if (error) return reject(error);
@@ -29,23 +32,24 @@ export const uploadUserResume = async (req, res, next) => {
       streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
     });
 
+    // Delete old resume if exists
     if (user.resumePublicId) {
-      await cloudinary.uploader.destroy(user.resumePublicId);
+      await cloudinary.uploader.destroy(user.resumePublicId, {
+        resource_type: "raw",
+      });
     }
 
     user.resume = result.secure_url;
     user.resumePublicId = result.public_id;
     await user.save();
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
+      message: "Resume uploaded successfully",
       resume: user.resume,
     });
   } catch (error) {
     console.log("UPLOAD ERROR:", error);
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };

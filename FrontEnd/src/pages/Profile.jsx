@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import ResumeUpload from "../components/ResumeUpload";
 import Container from "../components/Container";
+import ResumeViewer from "../components/ResumeViewer";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -36,14 +37,24 @@ const Profile = () => {
             <h3 className="text-lg font-semibold mb-3">Resume</h3>
 
             {user.resume ? (
-              <div className="space-y-4">
-                <img
-                  src={user.resume}
-                  alt="Resume"
-                  className="w-full rounded-xl shadow"
-                />
+              // <div className="space-y-4">
+              //   <img
+              //     src={user.resume}
+              //     alt="Resume"
+              //     className="w-full rounded-xl shadow"
+              //   />
 
-                <ResumeUpload />
+              //   <ResumeUpload />
+              // </div>
+              <div>
+                <a
+                  href={user.resume}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 text-center mt-4 block"
+                >
+                  view resume
+                </a>
               </div>
             ) : (
               <ResumeUpload />
