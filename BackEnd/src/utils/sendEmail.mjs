@@ -1,37 +1,32 @@
 import nodemailer from "nodemailer";
 
-export const sendEmail = async ({ to, subject, html,attachments=[] }) => {
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false, 
+  auth: {
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
+  },
+});
 
-  try{
-    if(!to){
-      console.log("Email not sent");
+export const sendEmail = async ({ to, subject, html, attachments = [] }) => {
+  try {
+    if (!to) {
+      console.log("No recipient email provided");
       return;
     }
-     const transporter = nodemailer.createTransport({
-       service: "gmail",
-       host: "smtp.gmail.com",
-       port: 465,
-       secure: true,
-       auth: {
-         user: process.env.EMAIL_USER,
-         pass: process.env.EMAIL_PASS,
-       },
-       tls: {
-         rejectUnauthorized: false,
-       },
-     });
-     transporter.sendMail({
-       from: `"Job Junction" <${process.env.EMAIL_USER}>`,
-       to,
-       subject,
-       html,
-       attachments,
-     });
 
+    const info = await transporter.sendMail({
+      from: `"JobJunction" <${process.env.BREVO_USER}>`,
+      to,
+      subject,
+      html,
+      attachments,
+    });
+
+    console.log("Email sent:", info.messageId);
+  } catch (error) {
+    console.error("Email sending failed:", error.message);
   }
-  catch(error){
-    console.log("Email sending failed!")
-  }
- 
 };
-
