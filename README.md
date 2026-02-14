@@ -1,174 +1,151 @@
-🌐 Live Demo
-Frontend (Vercel):
-👉https://job-junction-lime.vercel.app/
-Backend (Render):
-👉https://mern-job-portal-m2pc.onrender.com/
+# 🚀 JobJunction – MERN Job Portal
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## 🌐 Live Demo
 
-📌 Project Overview
-JobJunction is a full-stack job portal built with the MERN stack where:
-👨‍💼 Users can apply for jobs, upload resumes
-🏢 Recruiters can post jobs & schedule interviews
-🛡 Admin can manage recruiters & users
-📧 Email notifications for interviews & password reset
-☁ Cloudinary for resume storage
-🔐 Secure JWT authentication with HTTP-only cookies
+**Frontend (Vercel)**  
+👉 https://job-junction-lime.vercel.app/
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-✨Feature List
-🔐 Authentication
-Register / Login / Logout
-Role-based access (User / Recruiter / Admin)
-JWT authentication (HTTP-only cookies)
-Forgot password via email
-Reset password with token
+**Backend (Render)**  
+👉 https://mern-job-portal-m2pc.onrender.com/
 
 ---
 
-👤 User Features
-Browse & search jobs
-Apply to jobs
-View application status
-Accept / Reject interview
-Upload resume (Cloudinary)
-Save / Bookmark jobs.
+## 📌 Project Overview
+
+JobJunction is a full-stack job portal built with the MERN Stack where:
+
+- 👨‍💼 Users can apply for jobs & upload resumes
+- 🏢 Recruiters can post jobs & schedule interviews
+- 🛡 Admin can manage recruiters & users
+- 📧 Email notifications for interviews & password reset
+- ☁ Cloudinary for resume storage
+- 🔐 Secure JWT authentication with HTTP-only cookies
 
 ---
 
-🏢 Recruiter Features
-Create / Edit / Delete jobs
-View applicants
-Shortlist / Reject applicants
-Schedule interviews
-Edit / Cancel interview
-Send email notifications.
+## ✨ Feature List
+
+### 🔐 Authentication
+
+- Register / Login / Logout
+- Role-based access (User / Recruiter / Admin)
+- JWT authentication (HTTP-only cookies)
+- Forgot password via email
+- Reset password with token
 
 ---
 
-🛡 Admin Features
-View users
-Approve / Reject recruiters
+### 👤 User Features
 
----
-  
-🎨 Frontend
-Dark mode
-Responsive Navbar (Desktop + Mobile)
-Drawer menu
-Profile dropdown
-Scroll animations
-Footer with social links
+- Browse & search jobs
+- Apply to jobs
+- View application status
+- Accept / Reject interview
+- Upload resume (Cloudinary)
+- Save / Bookmark jobs
 
 ---
 
-☁ Deployment
-Frontend → Vercel
-Backend → Render
-Database → MongoDB Atlas
-File Storage → Cloudinary
-Email Service → Brevo
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+### 🏢 Recruiter Features
 
-📸 Screenshots
+- Create / Edit / Delete jobs
+- View applicants
+- Shortlist / Reject applicants
+- Schedule interviews
+- Edit / Cancel interview
+- Send email notifications
 
- 🏠 Homepage  
-Modern landing page with role-based navigation and clean dark/light UI.  
+---
+
+### 🛡 Admin Features
+
+- View users
+- Approve / Reject recruiters
+
+---
+
+### 🎨 Frontend Features
+
+- Dark mode
+- Responsive Navbar (Desktop + Mobile)
+- Drawer menu
+- Profile dropdown
+- Scroll animations
+- Footer with social links
+
+---
+
+## ☁ Deployment
+
+- Frontend → Vercel
+- Backend → Render
+- Database → MongoDB Atlas
+- File Storage → Cloudinary
+- Email Service → Brevo
+
+---
+
+# 📸 Screenshots
+
+### 🏠 Homepage
 ![Homepage](./screenshots/Homepage.png)
 
----
-
-📋 Jobs Page  
-Browse, search and filter jobs with real-time updates and apply functionality.  
+### 📋 Jobs Page
 ![Jobs](./screenshots/Jobs.png)
 
----
-
-📝 My Applications  
-Track applied jobs, view interview status, and manage responses.  
+### 📝 My Applications
 ![MyApplications](./screenshots/MyApplications.png)
 
----
-
-👥 Job Applicants (Recruiter View)  
-Recruiters can view applicants, shortlist, reject, and schedule interviews.  
+### 👥 Job Applicants
 ![JobApplicants](./screenshots/JobApplicants.png)
 
----
-
-👤 Profile Page  
-User profile with resume upload and secure file handling via Cloudinary.  
+### 👤 Profile Page
 ![Profile](./screenshots/Profile.png)
 
----
-
-🧑‍💼 Recruiter Dashboard  
-Recruiter analytics and job management overview.  
+### 🧑‍💼 Recruiter Dashboard
 ![RecruiterDashboard](./screenshots/RecruiterDashboard.png)
 
----
-
-📂 Recruiter Jobs  
-Manage posted jobs, edit, delete, and monitor applications.  
+### 📂 Recruiter Jobs
 ![RecruiterJobs](./screenshots/RecruiterJobs.png)
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
-🏗 System Architecture
+## 🏗 System Architecture
 
+```
 Frontend (React + Vite)
         ↓
 Backend API (Node + Express)
         ↓
-MongoDB Atlas (Database)
+MongoDB Atlas
 
 File Storage → Cloudinary
 Email Service → Brevo
+
 Deployment:
 Frontend → Vercel
 Backend → Render
+```
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
-📂 Folder Structure
+## 🛠 Tech Stack
 
-JobPortal/
-│
-├── Frontend/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── features/
-│
-├── Backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middlewares/
-│   └── config/
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-🛠 Tech Stack
-
-Frontend:
+### Frontend
 - React
 - Redux Toolkit
 - Tailwind CSS
 - React Router
 
-Backend:
+### Backend
 - Node.js
 - Express.js
 - MongoDB
 - JWT Authentication
 
-Cloud:
+### Cloud & Services
 - MongoDB Atlas
 - Cloudinary
 - Brevo
 - Render
 - Vercel
-
-
