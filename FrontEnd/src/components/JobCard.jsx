@@ -22,7 +22,6 @@ const JobCard = ({ job }) => {
 
   return (
     <div className="relative rounded-xl border shadow-sm hover:shadow-md transition p-5 bg-white dark:bg-gray-800">
-      
       <button
         onClick={handleSave}
         className="absolute top-3 right-3 text-xl"
@@ -34,6 +33,7 @@ const JobCard = ({ job }) => {
       <h3 className="text-lg font-semibold mb-1">{job.title}</h3>
       <p className="text-sm text-gray-500">{job.location}</p>
       <p className="mt-3 text-sm line-clamp-3">{job.description}</p>
+      <p className="mt-3 text-xl line-clamp-3">Recruiter: {job.recruiter.name}</p>
 
       <button
         disabled={isApplied || loading}
