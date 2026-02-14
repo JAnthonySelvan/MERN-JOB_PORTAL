@@ -176,8 +176,12 @@ const applicationSlice = createSlice({
         state.error = action.payload;
       })
 
+      .addCase(fetchApplicants.pending,(state)=>{
+        state.loading=true;
+      })
   
       .addCase(fetchApplicants.fulfilled, (state, action) => {
+        state.loading=false;
         state.applicants = action.payload.applications;
       })
 

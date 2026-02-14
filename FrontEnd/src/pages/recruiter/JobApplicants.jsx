@@ -7,12 +7,13 @@ import {
   cancelInterview,
 } from "../../features/application/applicationSlice";
 import ScheduleInterview from "./ScheduleInterview";
+import Loader from "../../components/Loader"
 
 const JobApplicants = () => {
   const { jobId } = useParams();
   const dispatch = useDispatch();
 
-  const { applicants } = useSelector((state) => state.application);
+  const { applicants,loading } = useSelector((state) => state.application);
   const [editId, setEditId] = useState(null);
 
   const handleStatusUpdate = async (applicationId, status) => {
@@ -29,6 +30,12 @@ const JobApplicants = () => {
   useEffect(() => {
     dispatch(fetchApplicants(jobId));
   }, [dispatch, jobId]);
+
+  if(loading){
+    return(
+      <Loader/>
+    )
+  }
 
   return (
     <div className="p-6 grid lg:grid-cols-3 md:grid-cols-2 gap-3">
