@@ -36,7 +36,11 @@ const JobApplicants = () => {
       <Loader/>
     )
   }
-
+  if(applicants.length===0){
+    return(
+      <h1 className="text-red-700 text-center text-3xl">No Applicants</h1>
+    )
+  }
   return (
     <div className="p-6 grid lg:grid-cols-3 md:grid-cols-2 gap-3">
       <h2 className="text-xl font-bold mb-4 lg:col-span-3 md:col-span-2">
