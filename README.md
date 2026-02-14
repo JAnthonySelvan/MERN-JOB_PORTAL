@@ -75,43 +75,43 @@ Email Service → Brevo
 
  🏠 Homepage  
 Modern landing page with role-based navigation and clean dark/light UI.  
-![Homepage](./screenshots/home.png)
+![Homepage](./screenshots/Homepage.png)
 
 ---
 
 📋 Jobs Page  
 Browse, search and filter jobs with real-time updates and apply functionality.  
-![Jobs](./screenshots/jobs.png)
+![Jobs](./screenshots/Jobs.png)
 
 ---
 
 📝 My Applications  
 Track applied jobs, view interview status, and manage responses.  
-![MyApplications](./screenshots/myapplications.png)
+![MyApplications](./screenshots/MyApplications.png)
 
 ---
 
 👥 Job Applicants (Recruiter View)  
 Recruiters can view applicants, shortlist, reject, and schedule interviews.  
-![JobApplicants](./screenshots/jobapplicants.png)
+![JobApplicants](./screenshots/JobApplicants.png)
 
 ---
 
 👤 Profile Page  
 User profile with resume upload and secure file handling via Cloudinary.  
-![Profile](./screenshots/profile.png)
+![Profile](./screenshots/Profile.png)
 
 ---
 
 🧑‍💼 Recruiter Dashboard  
 Recruiter analytics and job management overview.  
-![RecruiterDashboard](./screenshots/recruiterdashboard.png)
+![RecruiterDashboard](./screenshots/RecruiterDashboard.png)
 
 ---
 
 📂 Recruiter Jobs  
 Manage posted jobs, edit, delete, and monitor applications.  
-![RecruiterJobs](./screenshots/recruiterjobs.png)
+![RecruiterJobs](./screenshots/RecruiterJobs.png)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
